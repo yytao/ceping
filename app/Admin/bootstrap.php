@@ -19,3 +19,44 @@
  */
 
 Encore\Admin\Form::forget(['map', 'editor']);
+
+use Encore\Admin\Form;
+Form::init(function (Form $form) {
+
+    $form->disableEditingCheck();
+    $form->disableCreatingCheck();
+    $form->disableViewCheck();
+
+    $form->tools(function (Form\Tools $tools) {
+        $tools->disableDelete();
+        $tools->disableView();
+        $tools->disableList();
+    });
+});
+
+use Encore\Admin\Show;
+Show::init(function (Show $show) {
+
+    $show->panel()->tools(function ($tools) {
+        // 禁用编辑
+        $tools->disableEdit();
+        // 禁用删除
+        $tools->disableDelete();
+    });
+});
+
+use Encore\Admin\Grid;
+Grid::init(function (Grid $grid) {
+
+    $grid->disableExport();
+    $grid->actions(function ($actions){
+        $actions->disableView();
+    });
+
+    $grid->filter(function ($filter) {
+        $filter->disableIdFilter();
+    });
+
+});
+
+Admin::css('/common/css/laravel-admin.css');

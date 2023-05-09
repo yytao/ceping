@@ -13,4 +13,7 @@ Route::group([
 
     $router->get('/', 'HomeController@index')->name('home');
 
+    $router->resource('question', QuestionController::class);
+    $router->resource('modular', ModularController::class);
+
 });
