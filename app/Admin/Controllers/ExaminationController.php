@@ -2,31 +2,66 @@
 
 namespace App\Admin\Controllers;
 
-use App\Http\Controllers\Controller;
-use Encore\Admin\Controllers\Dashboard;
-use Encore\Admin\Layout\Column;
-use Encore\Admin\Layout\Content;
-use Encore\Admin\Layout\Row;
+use App\Models\Examination;
+use Encore\Admin\Controllers\AdminController;
+use Encore\Admin\Form;
+use Encore\Admin\Grid;
 
-class HomeController extends Controller
+class ExaminationController extends AdminController
 {
-    public function index(Content $content)
+    /**
+     * Title for current resource.
+     *
+     * @var string
+     */
+    protected $title = '试卷管理';
+
+    /**
+     * Make a grid builder.
+     *
+     * @return Grid
+     */
+    protected function grid()
     {
-        return $content
-            ->title('面板')
-            ->row(function (Row $row) {
+        $grid = new Grid(new Examination());
 
-                $row->column(4, function (Column $column) {
-                    $column->append(Dashboard::environment());
-                });
+        $grid->filter(function ($filter) {
+            $filter->like('name', "模块名称");
+            $filter->like('grade_type', "学段")->select(config('customParams.modular_grade_type'));
+        });
 
-                $row->column(4, function (Column $column) {
-                    $column->append(Dashboard::extensions());
-                });
+        $grid->column('id', __('ID'))->sortable()->width(100);
+        $grid->column('name', __('模块名称'))->width(300);
+        $grid->column('grade_type', __('学段'))->display(function ($title){
+            return implode(',', $title);
+        })->width(300);
 
-                $row->column(4, function (Column $column) {
-                    $column->append(Dashboard::dependencies());
-                });
-            });
+        $grid->column('type', __('模块类型'))
+            ->using(config('customParams.modular_type'))
+            ->label([
+                1 => 'success',
+                2 => 'warning',
+                3 => 'info',
+            ])->width(300);
+
+        $grid->column('created_at', __('创建时间'));
+        $grid->column('updated_at', __('修改时间'));
+
+        return $grid;
+    }
+
+    /**
+     * Make a form builder.
+     *
+     * @return Form
+     */
+    protected function form()
+    {
+        $form = new Form(new Examination());
+
+        $form->text('name', '模块名称')->required();
+        $form->multipleSelect('grade_type', '学段')->options(config('customParams.modular_grade_type'))->required();
+
+        return $form;
     }
 }

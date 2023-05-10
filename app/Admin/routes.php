@@ -16,4 +16,7 @@ Route::group([
     $router->resource('question', QuestionController::class);
     $router->resource('modular', ModularController::class);
 
+    $router->resource('school', SchoolController::class);
+    $router->resource('student', StudentController::class);
+
 });
