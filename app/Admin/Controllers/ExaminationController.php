@@ -32,18 +32,9 @@ class ExaminationController extends AdminController
 
         $grid->column('id', __('ID'))->sortable()->width(100);
         $grid->column('name', __('模块名称'))->width(300);
-        $grid->column('grade_type', __('学段'))->display(function ($title){
-            return implode(',', $title);
-        })->width(300);
 
-        $grid->column('type', __('模块类型'))
-            ->using(config('customParams.modular_type'))
-            ->label([
-                1 => 'success',
-                2 => 'warning',
-                3 => 'info',
-            ])->width(300);
 
+        
         $grid->column('created_at', __('创建时间'));
         $grid->column('updated_at', __('修改时间'));
 
