@@ -34,7 +34,7 @@ class ExaminationController extends AdminController
         $grid->column('name', __('模块名称'))->width(300);
 
 
-        
+
         $grid->column('created_at', __('创建时间'));
         $grid->column('updated_at', __('修改时间'));
 
