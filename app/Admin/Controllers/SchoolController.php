@@ -32,7 +32,7 @@ class SchoolController extends AdminController
         });
 
         $grid->column('id', __('ID'))->sortable()->width(100);
-        $grid->column('name', __('学校名称'))->width(300);
+        $grid->column('name', __('学校名称'))->width(300)->editable();
         $grid->column('campus', __('校区'))->width(300);
         $grid->column('grade_type', __('学段'))->width(150);
 
