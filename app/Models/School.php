@@ -25,4 +25,16 @@ class School extends Model
         return $return;
     }
 
+    public function getSelectOptionsByGrade($grade = "")
+    {
+        $result = self::where('grade_type', 'like', "%$grade%")->get();
+        $return = [];
+        foreach ($result as $k=>$item)
+        {
+            $return[$item->id] = $item->name;
+        }
+
+        return $return;
+    }
+
 }

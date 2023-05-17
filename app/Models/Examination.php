@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Examination extends Model
 {
-    protected $table = "cp_modular";
+    protected $table = "cp_examination";
     protected $guarded = [];
 
     protected function serializeDate(\DateTimeInterface $date){
@@ -15,11 +15,11 @@ class Examination extends Model
 
 
     /*
-     * 一对多关系
+     * 一对一关系
      */
-    public function question()
+    public function school()
     {
-        return $this->hasMany(Question::class, 'modular_id', 'id');
+        return $this->hasOne(School::class, 'school_id', 'id');
     }
 
 }
