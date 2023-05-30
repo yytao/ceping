@@ -258,7 +258,7 @@
             <div class="body_flex">
                 <p>Edit Profile</p>
                 <p>Reset Password</p>
-                <p>Log Out</p>
+                <p id="logout">退出</p>
             </div>
             <div class="flex_wrap">
                 <div class="flex_left" id="Psychological">
@@ -285,5 +285,9 @@
 <script>
     $("#Psychological").click(function (){
         window.location.href = "/exam"
+    })
+
+    $("#logout").click(function (){
+        window.location.href = "/logout"
     })
 </script>

@@ -18,8 +18,10 @@
     <!-- 删除默认的苹果工具栏和菜单栏。 -->
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <!-- 苹果手机控制状态栏显示样式 -->
-    <meta name="viewport"
-        content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1,viewport-fit=cover">
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1,viewport-fit=cover">
+
+    <meta name="csrf-token" content="<?= csrf_token() ?>">
+
     <title>登录</title>
     <style>
         * {
@@ -301,14 +303,8 @@
 <body>
     <div class="container">
         <div class="login-wrapper">
-            <!-- <div class="email_img">
-                <img src="./img/email.png" alt="">
-                <p>2</p>
-            </div> -->
             <div class="header">
                 <div class="head">
-                    <!-- <img src="https://bkimg.cdn.bcebos.com/pic/8326cffc1e178a82b90121e08855648da9773912426e?x-bce-process=image/watermark,image_d2F0ZXIvYmFpa2UyNzI=,g_7,xp_5,yp_5"
-                        alt=""> -->
                     <img src="/common/image/chongqing_University.png" alt="">
                 </div>
                 <div class="head_name">
@@ -318,37 +314,21 @@
             </div>
             <div class="form-wrapper">
                 <div style="display: flex;justify-content: space-between;height: 25px;
-                font-size: 13px;"><span>Evaluation of Adaptability</span><span>Sign in</span></div>
-                <input type="text" name="Name" placeholder="Email / Registration No" class="input-item">
-                <input type="text" name="password" placeholder="Passsword" class="input-item">
-                <input type="texts" id="input-val" name="Number" placeholder="Type the text below" class="input-item"
-                    value="" onfocus="this.value=''" onblur="if(this.value=='')this.value=''" />
-
-                <div class="main_bar" leftmargin="0" onload="changeImg()">
-                    <form action="login.html" onsubmit="return check()" style="display: flex;">
-                        <!-- <span id="code"
-                            title="change">8576</span> --> <canvas id="canvas" width="100" height="30"></canvas>
-                        <div id="search_pass_link">
-                        </div>
-                        <!-- <input type="submit" id="submit" value="登陆" class="btns"
-                            onmouseover="this.style.backgroundColor='#FF8D00'"
-                            onmouseout="this.style.backgroundColor='#FC5628'"> -->
-                        <!-- <input type="reset" value="取消" class="btns" onmouseover="this.style.backgroundColor='#FF8D00'"
-                            onmouseout="this.style.backgroundColor='#FC5628'"> -->
-                        <p id="change_click">Change</p>
-                    </form>
-
-
-                    <a class="main_bar_right" href="">
-                        <p><span>?</span></p>
-                        <p><span>Forgot password</span></p>
-                    </a>
+                font-size: 13px; color: red;">
+                    <span id="msg"></span>
                 </div>
-                <div class="sigin_btn btn" id="signIn">Sign in</div>
-                <div class="msg">
-                    Don't have account?
-                    <a href="#" style="color: #000;">Sign up</a>
+
+                <input type="text" name="name" placeholder="用户名" class="input-item">
+                <input type="password" name="password" placeholder="密码" class="input-item">
+                <input type="text" name="captcha" placeholder="验证码" class="input-item" value="" />
+
+                <div class="main_bar" leftmargin="0">
+                    <img id="captcha" src="{{captcha_src()}}" onclick="this.src='{{captcha_src()}}'+Math.random()" title="点击图片重新获取验证码" />
+                    <p style="margin-right: 265px;margin-top: 10px;" id="change_click">换一个</p>
+
                 </div>
+
+                <div class="sigin_btn btn" id="signIn">登录</div>
             </div>
 
         </div>
@@ -357,93 +337,46 @@
 <script src="/common/js/jquery-3.7.0.min.js"></script>
 <script type="text/javascript">
 
+    $("#change_click").click(function (){
+        $("#captcha").attr('src', '{{ captcha_src() }}'+Math.random());
+    })
+
     $("#signIn").click(function (){
-        window.location.href = "/user"
-    })
 
-    $(function () {
-        var show_num = [];
-        draw(show_num);
+        $('#msg').html('');
+        var name = $("input[name='name']").val();
+        var password = $("input[name='password']").val();
+        var captcha = $("input[name='captcha']").val();
 
-        $("#change_click").on('click', function () {
-            draw(show_num);
-            console.log("draw(show_num);");
-        })
-        $("#submit").on('click', function () {
-            var val = $("#input-val").val().toLowerCase();
-            var num = show_num.join("");
-            if (val == '') {
-                alert('请输入验证码！');
-            } else if (val == num) {
-                alert('提交成功！');
-                $("#input-val").val('');
-                // draw(show_num);
+        if(!name || !password || !captcha){
+            alert("请将信息填写完整！")
+            return false;
+        }
 
-            } else {
-                alert('验证码错误！请重新输入！');
-                $("#input-val").val('');
-                // draw(show_num);
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
             }
-        })
+        });
+        $.ajax({
+            type: 'POST',
+            url: '/login',
+            data: {name:name, password:password, captcha:captcha},
+            dataType: 'json',
+            success: function (resp){
+                $('#msg').html(resp.msg);
+
+                if(resp.statusCode == 401) {
+
+                    $("#captcha").attr('src', '{{ captcha_src() }}'+Math.random());
+                }else if(resp.statusCode == 200) {
+
+                    window.location.href = "/user"
+                }
+            }
+        });
+
     })
 
-    //生成并渲染出验证码图形
-    function draw(show_num) {
-        var canvas_width = $('#canvas').width();
-        var canvas_height = $('#canvas').height();
-        var canvas = document.getElementById("canvas");//获取到canvas的对象，演员
-        var context = canvas.getContext("2d");//获取到canvas画图的环境，演员表演的舞台
-        canvas.width = canvas_width;
-        canvas.height = canvas_height;
-        // a,b,c,d,e,f,g,h,i,j,k,m,n,p,q,r,s,t,u,v,w,x,y,z,A,B,C,E,F,G,H,J,K,L,M,N,P,Q,R,S,T,W,X,Y,Z,
-        var sCode = "1,2,3,4,5,6,7,8,9,0";
-        var aCode = sCode.split(",");
-        var aLength = aCode.length;//获取到数组的长度
-
-        for (var i = 0; i < 4; i++) {  //这里的for循环可以控制验证码位数（如果想显示6位数，4改成6即可）
-            var j = Math.floor(Math.random() * aLength);//获取到随机的索引值
-            // var deg = Math.random() * 30 * Math.PI / 180;//产生0~30之间的随机弧度
-            var deg = Math.random() - 0.5; //产生一个随机弧度
-            var txt = aCode[j];//得到随机的一个内容
-            show_num[i] = txt.toLowerCase();
-            var x = 10 + i * 20;//文字在canvas上的x坐标
-            var y = 20 + Math.random() * 8;//文字在canvas上的y坐标
-            context.font = "bold 23px 微软雅黑";
-
-            context.translate(x, y);
-            context.rotate(deg);
-
-            context.fillStyle = randomColor();
-            context.fillText(txt, 0, 0);
-
-            context.rotate(-deg);
-            context.translate(-x, -y);
-        }
-        for (var i = 0; i <= 5; i++) { //验证码上显示线条
-            context.strokeStyle = randomColor();
-            context.beginPath();
-            context.moveTo(Math.random() * canvas_width, Math.random() * canvas_height);
-            context.lineTo(Math.random() * canvas_width, Math.random() * canvas_height);
-            context.stroke();
-        }
-        for (var i = 0; i <= 30; i++) { //验证码上显示小点
-            context.strokeStyle = randomColor();
-            context.beginPath();
-            var x = Math.random() * canvas_width;
-            var y = Math.random() * canvas_height;
-            context.moveTo(x, y);
-            context.lineTo(x + 1, y + 1);
-            context.stroke();
-        }
-    }
-
-    //得到随机的颜色值
-    function randomColor() {
-        var r = Math.floor(Math.random() * 256);
-        var g = Math.floor(Math.random() * 256);
-        var b = Math.floor(Math.random() * 256);
-        return "rgb(" + r + "," + g + "," + b + ")";
-    }
 </script>
-
 </html>

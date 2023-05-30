@@ -12,14 +12,8 @@ class IndexController extends Controller
     {
         return view("index");
     }
-    public function login()
-    {
-        return view("login");
-    }
-    public function user()
-    {
-        return view("user_center");
-    }
+
+
     public function exam()
     {
         return view("exam_page");
