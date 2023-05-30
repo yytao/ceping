@@ -47,6 +47,7 @@ Show::init(function (Show $show) {
 
 use Encore\Admin\Grid;
 Grid::init(function (Grid $grid) {
+    $grid->setActionClass(ContextMenuActions::class);
 
     $grid->disableExport();
     $grid->actions(function ($actions){

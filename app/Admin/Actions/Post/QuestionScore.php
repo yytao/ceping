@@ -5,7 +5,7 @@ namespace App\Admin\Actions\Post;
 use Encore\Admin\Actions\RowAction;
 use Illuminate\Database\Eloquent\Model;
 
-class \QuestionScore extends RowAction
+class QuestionScore extends RowAction
 {
     public $name = '计分方式';
 

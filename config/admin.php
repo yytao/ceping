@@ -404,6 +404,8 @@ return [
     | https://github.com/laravel-admin-extensions.
     |
     */
+    'grid_action_class' => \Encore\Admin\Grid\Displayers\ContextMenuActions::class,
+
     'extensions' => [
 
         'chartjs' => [

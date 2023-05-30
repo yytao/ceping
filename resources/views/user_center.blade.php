@@ -242,39 +242,35 @@
 <body>
     <div class="container">
         <div class="login-wrapper">
-            <div class="email_img">
-                <img src="/common/image/email.png" alt="">
-                <p>2</p>
-            </div>
             <div class="header">
                 <div class="head">
                     <img src="/common/image/head.png" alt="">
                 </div>
                 <div class="head_name">
-                    Hi Kristi !
+                    {{ $user->name }}
                 </div>
-                <div class="text">We found out some interesting topics for you</div>
+                <div class="text"></div>
             </div>
             <div class="body_flex">
-                <p>Edit Profile</p>
-                <p>Reset Password</p>
+                <p>修改信息</p>
+                <p>修改密码</p>
                 <p id="logout">退出</p>
             </div>
             <div class="flex_wrap">
                 <div class="flex_left" id="Psychological">
-                    Psychological <br>I Assessment<br>System
-                    <p>2</p>
+                    个人心理评估系统
                 </div>
 
                 <div class="flex_right">
-                    <p>Study Potential<br>Ability Assessment</p>
-                    <p>Evaluation of<br>Learning Ability</p>
+                    <p>学习能力评价</p>
+                    <p>学习潜能评估</p>
                 </div>
             </div>
+
             <div class="botttom_class">
                 <img src="/common/image/bottom1.png" alt="">
                 <img src="/common/image/bottom2.png" alt="">
-                <img src="/common/image/bottom3.png" alt="">
+                <img src="/common/image/bottom3.png" onclick="window.location.href='/user'" alt="">
             </div>
         </div>
     </div>
