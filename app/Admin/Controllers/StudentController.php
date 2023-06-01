@@ -3,10 +3,11 @@
 namespace App\Admin\Controllers;
 
 use App\Models\School;
-use App\Models\Student;
+use App\Models\User;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
+use Illuminate\Support\Facades\Hash;
 
 class StudentController extends AdminController
 {
@@ -24,7 +25,7 @@ class StudentController extends AdminController
      */
     protected function grid()
     {
-        $grid = new Grid(new Student());
+        $grid = new Grid(new User());
 
         $grid->filter(function ($filter) {
             $filter->like('school.name', "学校");
@@ -54,7 +55,7 @@ class StudentController extends AdminController
      */
     protected function form()
     {
-        $form = new Form(new Student());
+        $form = new Form(new User());
 
         $form->text('name', '姓名')->required();
         $form->text('id_card', '身份证号')->required();
@@ -64,6 +65,13 @@ class StudentController extends AdminController
         $form->text('class', '班级')->required();
         $form->text('student_id', '学校内部学号')->required();
         $form->text('student_code', '学籍号')->required();
+
+        $form->hidden('password', '密码')->value(Hash::make('123456'));
+
+        //保存前回调
+        $form->saving(function (Form $form) {
+            $form->password = Hash::make($form->student_id);
+        });
 
         return $form;
     }

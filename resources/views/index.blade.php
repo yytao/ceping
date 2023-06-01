@@ -255,7 +255,6 @@
             </div>
             <div class="bottom_btn">
                 <div class="login_btn btn btns" id="submit" type="submit" class="btns">登录</div>
-                <div class="register_btn btn btns">注册</div>
             </div>
         </div>
     </div>
