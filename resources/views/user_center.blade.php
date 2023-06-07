@@ -257,8 +257,18 @@
                 <p id="logout">退出</p>
             </div>
             <div class="flex_wrap">
-                <div class="flex_left" id="Psychological">
+                <div class="flex_left">
                     个人心理评估系统
+                    <br>
+                    <br>
+                    <br>
+
+                    @foreach($examination as $k=>$item)
+                        <a href="/exam/{{ $item->id }}" style="color: black;">
+                            试卷{{ $k+1 }}：{{ $item->name }}
+                        </a>
+                    @endforeach
+
                 </div>
 
                 <div class="flex_right">
@@ -279,9 +289,6 @@
 </html>
 <script src="/common/js/jquery-3.7.0.min.js"></script>
 <script>
-    $("#Psychological").click(function (){
-        window.location.href = "/exam"
-    })
 
     $("#logout").click(function (){
         window.location.href = "/logout"

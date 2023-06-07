@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ExaminationController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,6 +27,8 @@ Route::get('/logout', [LoginController::class, "logout"])->name('logout');
 
 Route::group(['middleware'=>['auth']], function() {
     Route::get('/user', [UsersController::class, "index"]);
-    Route::get('/exam', [IndexController::class, "exam"]);
+    Route::get('/exam/{exam_id}', [ExaminationController::class, "index"]);
+    Route::post('/exam/getQuestion', [ExaminationController::class, "getQuestion"]);
+
 
 });

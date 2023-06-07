@@ -18,8 +18,9 @@
     <!-- 删除默认的苹果工具栏和菜单栏。 -->
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <!-- 苹果手机控制状态栏显示样式 -->
-    <meta name="viewport"
-        content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1,viewport-fit=cover">
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1,viewport-fit=cover">
+    <meta name="csrf-token" content="<?= csrf_token() ?>">
+
     <title>心测</title>
     <style>
         * {
@@ -218,41 +219,103 @@
     <div class="min_wrap">
         <div class="wrap">
             <header>
-                <p>Health Status Quick Screening Checklist for International Students in China</p>
-                <p>2022-O6-08 16:34:53 to 2022-06-08 17:04:53</p>
+                <p>
+                    {{ $examination->name }}
+                </p>
             </header>
-            <div class="body_class">
-                <div class="body_left">
-                    <img src="/common/image/head2.png" alt="" class="touxiang">
-                    <span class="bubble">
-                        l will go out with a friend if they invite me over.
-                    </span>
-                </div>
-                <div class="body_right">
-                    <span class="bubble_right">
-                        YES
-                    </span>
-                    <img src="/common/image/head2.png" alt="" class="touxiang">
-                </div>
-                <div class="body_left">
-                    <img src="/common/image/head2.png" alt="" class="touxiang">
-                    <div class="bubble">
-                        l will go out with a friend if theyinvite me over.
-                        <p>a. dddddd</p>
-                        <p>b. ddcccc</p>
-                        <p>c. dddddd</p>
-                        <p>d.22222222</p>
-                    </div>
-                </div>
+            <div class="body_class" id="questionZone">
+
+
+
+
+
             </div>
-            <div class="bottom_class">
-                <div class="btn" id="btn_a">A</div>
-                <div class="btn" id="btn_b">B</div>
-                <div class="btn" id="btn_c">C</div>
-                <div class="btn" id="btn_d">D</div>
+
+            <div class="bottom_class" id="answerZone">
+
             </div>
+            <input type="hidden" id="questionId" value="" />
+            <input type="hidden" id="modularId" value="" />
+
         </div>
     </div>
 </body>
 
 </html>
+<script src="/common/js/jquery-3.7.0.min.js"></script>
+<script>
+    var question;
+    var answer = []
+    $(function (){
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: 'POST',
+            url: '/exam/getQuestion',
+            data: {id:{{ $examination->id }}},
+            dataType: 'json',
+            success: function (resp){
+                if(resp.code == 400) {
+
+                    alert(resp.msg)
+                }else if(resp.code == 200) {
+
+                    question = resp.data
+                    nextQuestion()
+                }
+            }
+        });
+    });
+
+    var number = 0;
+    function nextQuestion() {
+        let item = question.shift()
+
+        let questionHtml = "<div class='body_left'><img src='/common/image/head2.png' class='touxiang'><span class='bubble'>"+item["question"]+"</span></div>"
+        $("#questionId").val(item["id"]);
+        $("#modularId").val(item["modular_id"]);
+
+        let answerHtml = "";
+        var answer = item["answer"]
+        for( var key in answer){
+            answerHtml += "<div class='btn answerBtn' data-title='"+answer[key].title+"' data-score='"+answer[key].score+"'>"+answer[key].title+"</div>"
+        }
+
+        $("#answerZone").html('')
+        $("#answerZone").append(answerHtml)
+        $("#questionZone").append(questionHtml)
+        var height = document.getElementById('questionZone').scrollHeight;
+        document.getElementById('questionZone').scroll({ top: height , left: 0, behavior: 'smooth'})
+    }
+
+</script>
+
+<script defer="defer">
+    $(function (){
+        $("#answerZone").on('click', '.answerBtn', function (){
+            var title = $(this).attr('data-title')
+            var score = $(this).attr('data-score')
+            var question_id = $("#questionId").val()
+            var modular_id = $("#modularId").val()
+
+            answer.push({title:title, score:score, question_id:question_id, modular_id:modular_id})
+
+            answerHtml = "<div class='body_right'><span class='bubble_right'>"+title+"</span><img src='/common/image/head2.png' class='touxiang'></div>"
+
+            $("#questionZone").append(answerHtml)
+            var height = document.getElementById('questionZone').scrollHeight;
+            document.getElementById('questionZone').scroll({ top: height , left: 0, behavior: 'smooth'})
+            if(Object.keys(question).length == 0){
+                alert('最后一题')
+                $("#answerZone").html("<div class='btn answerBtn'>提交</div>")
+            }else{
+                nextQuestion()
+            }
+
+        })
+    })
+
+</script>
