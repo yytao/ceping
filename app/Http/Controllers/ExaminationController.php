@@ -50,6 +50,16 @@ class ExaminationController extends Controller
             ]), 200);
         }
 
+        $isTest = ExaminationResults::where('examination_id', $exam_id)
+            ->where('user_id', $user->id)
+            ->first();
+        if($isTest) {
+            return response()->json(([
+                'code' => 400,
+                'msg' => '您已经做过该试卷！',
+            ]), 200);
+        }
+
         $question = Question::whereIn('modular_id', $examination->modular_rely)->get()->toArray();
 
         return response()->json(([
@@ -60,10 +70,32 @@ class ExaminationController extends Controller
 
     }
 
+    public function resultSubmit(Request $request)
+    {
+        $data = [];
+        $data['examination_id'] = $request->input('id');
+        $data['user_id'] = Auth::user()->id;
+        $data['result'] = json_encode($request->input('result'));
 
+        try {
 
+            ExaminationResults::create($data);
 
+            return response()->json(([
+                'code' => 200,
+                'msg' => '您已提交完成'
+            ]), 200);
 
+        } catch (\Exception $exception) {
+
+            dd($exception);
+            return response()->json(([
+                'code' => 400,
+                'msg' => '发生错误'
+            ]), 200);
+        }
+
+    }
 
 
 

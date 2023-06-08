@@ -260,9 +260,11 @@
             success: function (resp){
                 if(resp.code == 400) {
 
-                    alert(resp.msg)
-                }else if(resp.code == 200) {
+                    let questionHtml = "<div class='body_left'><img src='/common/image/head2.png' class='touxiang'><span class='bubble'>"+resp.msg+"</span></div>"
+                    $("#questionZone").append(questionHtml)
 
+                }else if(resp.code == 200) {
+                    $("#questionZone").html('')
                     question = resp.data
                     nextQuestion()
                 }
@@ -308,14 +310,43 @@
             $("#questionZone").append(answerHtml)
             var height = document.getElementById('questionZone').scrollHeight;
             document.getElementById('questionZone').scroll({ top: height , left: 0, behavior: 'smooth'})
+
             if(Object.keys(question).length == 0){
-                alert('最后一题')
-                $("#answerZone").html("<div class='btn answerBtn'>提交</div>")
+
+                $("#answerZone").html("<div class='btn submitBtn'>提交</div>")
             }else{
                 nextQuestion()
             }
 
         })
+
+        $("#answerZone").on('click', '.submitBtn', function (){
+            if(confirm("确认要提交吗？")){
+
+                console.log(answer)
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/exam/result',
+                    data: {id:{{ $examination->id }}, result:answer},
+                    dataType: 'json',
+                    success: function (resp){
+                        if(resp.code == 200) {
+                            alert(resp.msg)
+                            window.location.href = "/user"
+
+                        }else if(resp.code == 400) {
+                            alert(resp.msg)
+                        }
+                    }
+                });
+            }
+
+        })
+
+
+
+
     })
 
 </script>

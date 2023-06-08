@@ -29,6 +29,7 @@ Route::group(['middleware'=>['auth']], function() {
     Route::get('/user', [UsersController::class, "index"]);
     Route::get('/exam/{exam_id}', [ExaminationController::class, "index"]);
     Route::post('/exam/getQuestion', [ExaminationController::class, "getQuestion"]);
+    Route::post('/exam/result', [ExaminationController::class, "resultSubmit"]);
 
 
 });
