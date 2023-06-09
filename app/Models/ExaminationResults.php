@@ -21,7 +21,7 @@ class ExaminationResults extends Model
 
     public function school()
     {
-        return $this->hasMany(School::class, 'id', 'school_id');
+        return $this->hasOne(School::class, 'id', 'school_id');
     }
 
 }

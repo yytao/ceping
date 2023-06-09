@@ -40,5 +40,13 @@ class Examination extends Model
         return $this->hasOne(School::class, 'id', 'school_id');
     }
 
+    public function getRatingAttribute()
+    {
 
+        $schoolPeople = User::where('school_id', $this->school_id)->pluck('id')->toArray();
+
+        $finishPeople = ExaminationResults::whereIn('user_id', $schoolPeople)->where('examination_id', $this->id)->get();
+
+        return ($finishPeople->count() / count($schoolPeople)) * 100;
+    }
 }

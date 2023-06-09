@@ -76,6 +76,7 @@ class ExaminationController extends Controller
         $data = [];
         $data['examination_id'] = $request->input('id');
         $data['user_id'] = Auth::user()->id;
+        $data['school_id'] = Auth::user()->school_id;
         $data['result'] = json_encode($request->input('result'));
 
         try {
