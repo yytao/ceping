@@ -20,4 +20,10 @@ Route::group([
     $router->resource('school', SchoolController::class);
     $router->resource('student', StudentController::class);
 
+    $router->resource('evaluating', EvaluatingController::class);
+    $router->resource('classinfo', ClassinfoController::class);
+
+
+
+
 });

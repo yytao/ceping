@@ -36,10 +36,11 @@ class ExaminationController extends AdminController
         $grid->column('id', __('ID'))->sortable()->width(100);
         $grid->column('name', __('试卷名称'))->width(150);
 
-        $grid->school_rely(__('学校名称'))->width(150)->display(function ($school_rely){
-            $result = School::whereIn('id', $school_rely)->pluck('name')->toArray();
-            return implode('<br />', $result);
-        });
+        $grid->column('school.name', __('学校名称'))->width(150);
+//        $grid->school_rely(__('学校名称'))->width(150)->display(function ($school_rely){
+//            $result = School::whereIn('id', $school_rely)->pluck('name')->toArray();
+//            return implode('<br />', $result);
+//        });
 
         $grid->column('grade_type', __('学段'))->width(150);
 
@@ -69,16 +70,6 @@ class ExaminationController extends AdminController
         $form = new Form(new Examination());
         $form->saving(function (Form $form) {
 
-            if(empty($form->school_rely) || empty(@$form->school_rely[0]))
-            {
-                $error = new MessageBag([
-                    'title'   => '发生错误',
-                    'message' => '必须选择至少一个学校！',
-                ]);
-
-                return back()->with(compact('error'));
-            }
-
             if(empty($form->modular_rely) || empty(@$form->modular_rely[0]))
             {
                 $error = new MessageBag([
@@ -95,13 +86,13 @@ class ExaminationController extends AdminController
             ->options(config('customParams.modular_grade_type'))
             ->when('小学', function (Form $form){
 
-                $form->checkbox('school_rely', '学校')->options(School::getSelectOptionsByGrade('小学'));
+                $form->radio('school_id', '学校')->options(School::getSelectOptionsByGrade('小学'))->required();
             })->when('初中', function (Form $form){
 
-                $form->checkbox('school_rely', '学校')->options(School::getSelectOptionsByGrade('初中'));
+                $form->radio('school_id', '学校')->options(School::getSelectOptionsByGrade('初中'))->required();
             })->when('高中', function (Form $form){
 
-                $form->checkbox('school_rely', '学校')->options(School::getSelectOptionsByGrade('高中'));
+                $form->radio('school_id', '学校')->options(School::getSelectOptionsByGrade('高中'))->required();
             })->required();
 
         $form->checkbox('modular_rely', __('模块'))->options(Modular::getSelectOptions());

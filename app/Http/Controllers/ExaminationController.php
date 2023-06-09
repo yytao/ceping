@@ -21,8 +21,9 @@ class ExaminationController extends Controller
         }
         $user = Auth::user();
 
-        $examination = Examination::whereRaw("FIND_IN_SET(?, school_rely)", [$user->school_id])
-            ->whereRaw("id = ?", [$exam_id])->first();
+        //$examination = Examination::whereRaw("FIND_IN_SET(?, school_rely)", [$user->school_id])
+        $examination = Examination::where("school_id", $user->school_id)
+            ->where("id", $exam_id)->first();
         if(empty($examination)){
             return back();
         }
@@ -41,8 +42,8 @@ class ExaminationController extends Controller
         // 查询试卷该用户是否有权限
         $user = Auth::user();
 
-        $examination = Examination::whereRaw("FIND_IN_SET(?, school_rely)", [$user->school_id])
-            ->whereRaw("id = ?", [$exam_id])->first();
+        $examination = Examination::where("school_id", $user->school_id)
+            ->where("id", $exam_id)->first();
         if(empty($examination)){
             return response()->json(([
                 'code' => 400,

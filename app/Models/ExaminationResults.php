@@ -14,4 +14,14 @@ class ExaminationResults extends Model
     }
 
 
+    public function examination()
+    {
+        return $this->belongsTo(Examination::class, 'examination_id', 'id');
+    }
+
+    public function school()
+    {
+        return $this->hasMany(School::class, 'id', 'school_id');
+    }
+
 }

@@ -19,8 +19,10 @@ class UsersController extends Controller
         }
 
         $user = Auth::user();
+        //由于更改了school_rely为school_id，所以不用此语句检索了
+//        $examination = Examination::whereRaw("FIND_IN_SET(?, school_rely)", [$user->school_id])->get();
 
-        $examination = Examination::whereRaw("FIND_IN_SET(?, school_rely)", [$user->school_id])->get();
+        $examination = Examination::where("school_id", $user->school_id)->get();
 
         return view("user_center", compact(
             'user',
