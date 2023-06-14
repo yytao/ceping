@@ -47,6 +47,6 @@ class Examination extends Model
 
         $finishPeople = ExaminationResults::whereIn('user_id', $schoolPeople)->where('examination_id', $this->id)->get();
 
-        return ($finishPeople->count() / count($schoolPeople)) * 100;
+        return round(($finishPeople->count() / count($schoolPeople)) * 100, 2);
     }
 }

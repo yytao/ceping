@@ -13,14 +13,33 @@ Route::group([
 
     $router->get('/', 'HomeController@index')->name('home');
 
-    $router->resource('question', QuestionController::class);
-    $router->resource('modular', ModularController::class);
-    $router->resource('examination', ExaminationController::class);
-
+    //学校管理
     $router->resource('school', SchoolController::class);
+
+    //学生管理
     $router->resource('student', StudentController::class);
 
-    $router->resource('classinfo', ClassInfoController::class);
+    //试卷管理
+    $router->resource('examination', ExaminationController::class);
+
+
+    //学校进度
+    $router->resource('evaluating', EvaluatingController::class);
+
+    //班级进度
+    $router->resource('classInfo', ClassInfoController::class);
+
+    //班级进度
+    $router->resource('invalidExam', InvalidExamController::class);
+
+
+    //题库管理
+    $router->resource('question', QuestionController::class);
+
+    //模块管理
+    $router->resource('modular', ModularController::class);
+
+
 
 
 });

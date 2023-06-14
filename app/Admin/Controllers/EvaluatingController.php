@@ -11,7 +11,7 @@ use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Illuminate\Support\MessageBag;
 
-class ExaminationController extends AdminController
+class EvaluatingController extends AdminController
 {
     /**
      * Title for current resource.
@@ -49,7 +49,7 @@ class ExaminationController extends AdminController
 
         $grid->column('grade_type', __('学段'))->width(150);
 
-        $grid->modular_rely(__('模块'))->width(300)->display(function ($modular_rely){
+        $grid->modular_rely(__('模块'))->width(200)->display(function ($modular_rely){
             $result = Modular::whereIn('id', $modular_rely)->pluck('name')->toArray();
             $str = "";
             foreach ($result as $k=>$item)
@@ -59,9 +59,21 @@ class ExaminationController extends AdminController
             return $str;
         });
 
-//        $grid->column('rating', __('完成率'))->display(function (){
-//            return $this->rating."%";
-//        })->width(150);
+        $grid->start_date('测评起止时间')->display(function (){
+            return ($this->start_date??'--')." 至 ".($this->end_date??'--');
+        })->width(200);
+
+        $grid->end_date('剩余有效天数')->display(function (){
+            $datetime1 = new \DateTime(date("Y-m-d"));
+            $datetime2 = new \DateTime($this->end_date);
+            $interval = $datetime1->diff($datetime2);
+            return $interval->format('%a天');
+
+        })->width(200);
+
+        $grid->column('rating', __('完成率'))->display(function (){
+            return $this->rating."%";
+        })->width(150);
 
         $grid->column('created_at', __('创建时间'));
         $grid->column('updated_at', __('修改时间'));
@@ -77,36 +89,9 @@ class ExaminationController extends AdminController
     protected function form()
     {
         $form = new Form(new Examination());
-        $form->saving(function (Form $form) {
 
-            if(empty($form->modular_rely) || empty(@$form->modular_rely[0]))
-            {
-                $error = new MessageBag([
-                    'title'   => '发生错误',
-                    'message' => '必须选择至少一个模块！',
-                ]);
+        $form->dateRange('start_date', 'end_date', '起止时间');
 
-                return back()->with(compact('error'));
-            }
-        });
-
-        $form->text('name', '试卷名称')->required();
-        $form->radioCard('grade_type', '学段')
-            ->options(config('customParams.modular_grade_type'))
-            ->when('小学', function (Form $form){
-
-                $form->radio('school_id', '学校')->options(School::getSelectOptionsByGrade('小学'))->required();
-            })->when('初中', function (Form $form){
-
-                $form->radio('school_id', '学校')->options(School::getSelectOptionsByGrade('初中'))->required();
-            })->when('高中', function (Form $form){
-
-                $form->radio('school_id', '学校')->options(School::getSelectOptionsByGrade('高中'))->required();
-            })->required();
-
-        $form->checkbox('modular_rely', __('模块'))->options(Modular::getSelectOptions());
-
-        $form->number('exam_time', __('考试时长(分钟)'))->default(60)->max(300)->required();
         return $form;
     }
 }
