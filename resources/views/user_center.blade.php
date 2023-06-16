@@ -267,6 +267,8 @@
                         <a href="/exam/{{ $item->id }}" style="color: black;">
                             试卷{{ $k+1 }}：{{ $item->name }}
                         </a>
+                        <br />
+                        <br />
                     @endforeach
 
                 </div>

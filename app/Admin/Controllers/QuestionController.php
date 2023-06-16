@@ -2,7 +2,7 @@
 
 namespace App\Admin\Controllers;
 
-use App\Admin\Actions\Post\QuestionScore;
+use App\Admin\Actions\QuestionExcelAddBtn;
 use App\Models\Modular;
 use App\Models\Question;
 use Encore\Admin\Controllers\AdminController;
@@ -26,6 +26,11 @@ class QuestionController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new Question());
+
+        $grid->tools(function (Grid\Tools $tools) {
+            // excle 导入
+            $tools->append(new QuestionExcelAddBtn());
+        });
 
         $grid->filter(function ($filter) {
             $filter->equal('modular_id', "模块")->select(Modular::getSelectOptions());

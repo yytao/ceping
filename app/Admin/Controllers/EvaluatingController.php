@@ -5,11 +5,9 @@ namespace App\Admin\Controllers;
 use App\Models\Examination;
 use App\Models\Modular;
 use App\Models\Question;
-use App\Models\School;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
-use Illuminate\Support\MessageBag;
 
 class EvaluatingController extends AdminController
 {
@@ -18,7 +16,7 @@ class EvaluatingController extends AdminController
      *
      * @var string
      */
-    protected $title = '试卷管理';
+    protected $title = '学校进度';
 
     /**
      * Make a grid builder.
