@@ -2,6 +2,8 @@
 
 namespace App\Admin\Actions;
 
+use App\Models\Question;
+use Spatie\SimpleExcel\SimpleExcelReader;
 use Throwable;
 use Encore\Admin\Admin;
 use Encore\Admin\Actions\Action;
@@ -16,7 +18,42 @@ class QuestionExcelAddBtn extends Action
     public function handle()
     {
         try {
+            return null;
+            $data = SimpleExcelReader::create("C:\Users\chisaTy\Desktop\question.xlsx")->getRows();
 
+            foreach ($data as $k=>$item){
+
+                $creteData["question"] = $item["title"];
+
+                if(strpos($item["score"], '，')){
+
+                    $questionScore = explode('，', $item["score"]);
+
+                    $score = [];
+                    foreach ($questionScore as $k=>$it){
+                        $res = explode('=', $it);
+                        $score[$k]['title'] = $res[0];
+                        $score[$k]['score'] = rtrim($res[1], '分');
+                    }
+
+                    $creteData["answer"] = ($score);
+                }
+
+                if(strpos($item["score"], '、')){
+                    $questionScore = explode('、', $item["score"]);
+
+                    $score = [];
+                    foreach ($questionScore as $k=>$it){
+                        $res = explode('—', $it);
+                        $score[$k]['title'] = $res[1];
+                        $score[$k]['score'] = rtrim($res[0], '分');
+                    }
+
+                    $creteData["answer"] = ($score);
+                }
+
+                Question::create($creteData);
+            }
 
 
 
@@ -40,7 +77,7 @@ HTML;
     // 上传表单
     public function form()
     {
-        $this->file('file', '上传excel')->rules('required', ['required' => '文件不能为空']);
+        //$this->file('file', '上传excel')->rules('required', ['required' => '文件不能为空']);
     }
 
     /**

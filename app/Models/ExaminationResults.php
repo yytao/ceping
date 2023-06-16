@@ -13,6 +13,11 @@ class ExaminationResults extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
+    public function getResultAttribute($value)
+    {
+        return array_values(json_decode($value, true) ?: []);
+    }
+
 
     public function examination()
     {
