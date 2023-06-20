@@ -4,10 +4,10 @@
 
 <script type="text/javascript">
     // 基于准备好的dom，初始化echarts实例
-    var myChart = echarts.init(document.getElementById('chart1'));
+    var myChart1 = echarts.init(document.getElementById('chart1'));
 
     // 指定图表的配置项和数据
-    var option = {
+    var option1 = {
         title: {
             text: "学校统计"
         },
@@ -23,7 +23,6 @@
         },
         series: [
             {
-                name: '学校统计',
                 type: 'pie',
                 radius: ['40%', '70%'],
                 avoidLabelOverlap: false,
@@ -50,7 +49,11 @@
     };
 
     // 使用刚指定的配置项和数据显示图表。
-    myChart.setOption(option);
+    myChart1.setOption(option1);
+
+    window.addEventListener('resize', function() {
+        myChart1.resize();
+    });
 </script>
 
 

@@ -1,40 +1,76 @@
-<h3>问卷结果分析</h3>
-<canvas id="myChart2" width="800" height="400"></canvas>
-<script>
-    $(function () {
-        var ctx = document.getElementById("myChart2").getContext('2d');
+<script src="/common/js/echarts.min.js"></script>
 
-        const data = {
-            labels: ['Red', 'Orange', 'Yellow', 'Green', 'Blue'],
-            datasets: [
-                {
-                    label: '问卷结果分析',
-                    data: [12, 19, 3, 5, 2, 3],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                }
-            ]
-        };
+<div id="chart2" style="width: 100%; height: 380px;padding: 20px;"></div>
 
-        const config = {
-            type: 'pie',
-            data: data,
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart2 = echarts.init(document.getElementById('chart2'));
+
+    // 指定图表的配置项和数据
+    var option2 = {
+        title: {
+            text: "问卷结果分析"
+        },
+        tooltip: {
+            trigger: 'item'
+        },
+        legend: {
+            orient: 'vertical',
+            right: 10,
+            top: 30,
+            bottom: 30,
+            data: [@foreach($result as $k=>$item) '{{$item->name}}',@endforeach]
+        },
+        series: [
+            {
+                type: 'pie',
+
+                radius: '70%',
+                center: ['20%', '50%'],
+                left: 0,
+                avoidLabelOverlap: false,
+                label: {
+                    show: false,
+                    position: 'center'
+                },
+                emphasis: {
+                    label: {
+                        show: true,
+                        fontSize: 20,
+                        fontWeight: 'bold'
                     }
-                }
-            },
-        };
+                },
+                labelLine: {
+                    show: false
+                },
+                data: [
+                    @foreach($result as $k=>$item)
+                        { value:{{count($item->question)}}, name:'{{$item->name}}'},
+                    @endforeach
+                ]
+            }
+        ]
+    };
 
-        var myChart = new Chart(ctx, config);
+    // 使用刚指定的配置项和数据显示图表。
+    myChart2.setOption(option2);
+
+    window.addEventListener('resize', function() {
+        myChart2.resize();
     });
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

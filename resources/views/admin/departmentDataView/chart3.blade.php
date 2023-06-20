@@ -1,52 +1,75 @@
-<h3>考生分析</h3>
-<canvas id="myChart3" width="800" height="400"></canvas>
-<script>
-    $(function () {
-        var ctx = document.getElementById("myChart3").getContext('2d');
+<script src="/common/js/echarts.min.js"></script>
 
-        const data = {
-            datasets: [
-                {
-                    label: '# of Votes',
-                    radius:12,
-                    data: [
-                        {x:4,y:20,r:6},
-                        {x:11,y:10,r:16},
-                        {x:18,y:23,r:20},
-                        {x:25,y:4,r:12},
-                        {x:29,y:4,r:10},
-                    ],
-                    backgroundColor: "#F0CCD9",
-                    borderColor: "#F0CCD9",
-                    borderWidth: 1
+<div id="chart3" style="width: 100%; height: 380px;padding: 20px;"></div>
+
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart3 = echarts.init(document.getElementById('chart3'));
+
+    // 指定图表的配置项和数据
+    var option3 = {
+        title: {
+            text: "考生分析"
+        },
+        tooltip: {
+            trigger: 'item'
+        },
+        legend: {
+            orient: 'vertical',
+            right: 10,
+            top: 30,
+            bottom: 30,
+            data: ['小学', '初中', '高中']
+        },
+        xAxis: {
+            type: 'category',
+            data: ['小学', '初中', '高中']
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [
+            {
+                type: 'bar',
+                avoidLabelOverlap: false,
+                emphasis: {
+                    label: {
+                        show: true,
+                        fontSize: 20,
+                        fontWeight: 'bold'
+                    }
                 },
-                {
-                    label: '# of Votes',
-                    radius:12,
-                    data: [
-                        {x:3,y:12,r:10},
-                        {x:10,y:22,r:12},
-                        {x:18,y:10,r:24},
-                        {x:24,y:30,r:16},
-                        {x:28,y:25,r:6},
-                    ],
-                    backgroundColor: "#C0E0F6",
-                    borderColor: "#C0E0F6",
-                    borderWidth: 1
-                }
-            ]
-        };
+                labelLine: {
+                    show: false
+                },
+                label: {
+                    show: true,
+                    position: 'inside'
+                },
+                data: [120, 200, 150],
+            }
+        ]
+    };
 
-        const config = {
-            type: 'scatter',
-            data: data,
-            options: {
-                legend: {
-                    position: 'top',
-                }
-            },
-        };
+    // 使用刚指定的配置项和数据显示图表。
+    myChart3.setOption(option3);
 
-        var myChart = new Chart(ctx, config);
+    window.addEventListener('resize', function() {
+        myChart3.resize();
     });
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

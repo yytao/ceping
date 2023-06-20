@@ -1,52 +1,72 @@
-<h3>学校进度</h3>
-<canvas id="myChart5" width="800" height="200"></canvas>
-<script>
-    $(function () {
-        var ctx = document.getElementById("myChart5").getContext('2d');
+<script src="/common/js/echarts.min.js"></script>
 
-        const data = {
-            datasets: [
-                {
-                    label: '# of Votes',
-                    radius:12,
-                    data: [
-                        {x:4,y:20,r:6},
-                        {x:11,y:10,r:16},
-                        {x:18,y:23,r:20},
-                        {x:25,y:4,r:12},
-                        {x:29,y:4,r:10},
-                    ],
-                    backgroundColor: "#F0CCD9",
-                    borderColor: "#F0CCD9",
-                    borderWidth: 1
-                },
-                {
-                    label: '# of Votes',
-                    radius:12,
-                    data: [
-                        {x:3,y:12,r:10},
-                        {x:10,y:22,r:12},
-                        {x:18,y:10,r:24},
-                        {x:24,y:30,r:16},
-                        {x:28,y:25,r:6},
-                    ],
-                    backgroundColor: "#C0E0F6",
-                    borderColor: "#C0E0F6",
-                    borderWidth: 1
-                }
-            ]
-        };
+<div id="chart5" style="width: 100%; height: 380px;padding: 20px;"></div>
 
-        const config = {
-            type: 'scatter',
-            data: data,
-            options: {
-                legend: {
-                    position: 'top',
-                }
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart5 = echarts.init(document.getElementById('chart5'));
+
+    // 指定图表的配置项和数据
+    option5 = {
+        title: {
+          text: '学校进度'
+        },
+        dataset: [
+            {
+                dimensions: ['name', 'score'],
+                source: [
+                    ['朱辛庄1中', 30],
+                    ['朱辛庄2中', 14.2],
+                    ['朱辛庄3中', 15.2],
+                    ['朱辛庄4中', 16.8],
+                    ['朱辛庄5中', 16.1],
+                    ['朱辛庄6中', 21.5],
+                    ['朱辛庄7中', 23.5],
+                    ['朱辛庄8中', 24.3],
+                ]
             },
-        };
+            {
+                transform: {
+                    type: 'sort',
+                    config: { dimension: 'score', order: 'desc' }
+                }
+            }
+        ],
+        xAxis: {
+            type: 'category',
+            axisLabel: { interval: 0, rotate: 30 }
+        },
+        yAxis: {},
+        series: {
+            type: 'bar',
+            label: {
+                show: true,
+                position: 'inside'
+            },
+            encode: { x: 'name', y: 'score' },
+            datasetIndex: 1
+        }
+    };
 
-        var myChart = new Chart(ctx, config);
+    // 使用刚指定的配置项和数据显示图表。
+    myChart5.setOption(option5);
+
+    window.addEventListener('resize', function() {
+        myChart5.resize();
     });
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
