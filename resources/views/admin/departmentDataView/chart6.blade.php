@@ -1,8 +1,8 @@
-<h3>关键词</h3>
-<canvas id="myChart3" width="400" height="400"></canvas>
+<h3>最近完成调查的学校</h3>
+<canvas id="myChart6" width="800" height="400"></canvas>
 <script>
     $(function () {
-        var ctx = document.getElementById("myChart3").getContext('2d');
+        var ctx = document.getElementById("myChart6").getContext('2d');
 
         const data = {
             datasets: [

@@ -1,5 +1,5 @@
 <h3>问卷结果分析</h3>
-<canvas id="myChart2" width="400" height="400"></canvas>
+<canvas id="myChart2" width="800" height="400"></canvas>
 <script>
     $(function () {
         var ctx = document.getElementById("myChart2").getContext('2d');

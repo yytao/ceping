@@ -1,5 +1,5 @@
-<h3>考生分析</h3>
-<canvas id="myChart1" width="400" height="400"></canvas>
+<h3>学校统计</h3>
+<canvas id="myChart1" width="800" height="400"></canvas>
 <script>
     $(function () {
         var ctx = document.getElementById("myChart1").getContext('2d');

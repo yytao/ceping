@@ -13,6 +13,11 @@ Route::group([
 
     $router->get('/', 'HomeController@index')->name('home');
 
+    //数据看板
+    $router->get('departmentDataView', 'DepartmentDataViewController@index');
+    $router->get('schoolDataView', 'SchoolDataViewController@index');
+
+
     //学校管理
     $router->resource('school', SchoolController::class);
 
@@ -38,7 +43,5 @@ Route::group([
 
     //模块管理
     $router->resource('modular', ModularController::class);
-
-
 
 });
