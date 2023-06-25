@@ -33,11 +33,11 @@ class ClassInfoController extends AdminController
         $grid->year('届');
         $grid->grade('年级');
         $grid->class('班级');
-        $grid->total_students('人数');
 
         $grid->rating('完成率')->display(function (){
-            return $this->rating."%";
-        });
+            return $this->rating;
+        })->progressBar();
+        $grid->total_students('人数');
 
         return $grid;
     }

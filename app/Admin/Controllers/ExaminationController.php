@@ -11,6 +11,7 @@ use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Illuminate\Support\MessageBag;
 
+
 class ExaminationController extends AdminController
 {
     /**
@@ -34,27 +35,31 @@ class ExaminationController extends AdminController
             $filter->like('grade_type', "学段")->select(config('customParams.modular_grade_type'));
         });
 
-        $grid->column('id', __('ID'))->sortable()->width(100);
+        $grid->column('id', __('ID'))->sortable()->width(50);
         $grid->column('name', __('试卷名称'))->display(function ($name){
 
             $count = Question::whereIn('modular_id', $this->modular_rely)->count();
             return "<span style='font-size: 16px !important;'><b>".$name."</b></span><br><span style='font-size: 8px !important;'>(共".$count."题)</span>";
-        })->width(150);
+        })->width(200);
 
-        $grid->column('school.name', __('学校名称'))->width(150);
+        $grid->column('school.name', __('学校名称'))->width(200);
 //        $grid->school_rely(__('学校名称'))->width(150)->display(function ($school_rely){
 //            $result = School::whereIn('id', $school_rely)->pluck('name')->toArray();
 //            return implode('<br />', $result);
 //        });
 
-        $grid->column('grade_type', __('学段'))->width(150);
+        $grid->column('grade_type', __('学段'))->width(100);
 
-        $grid->modular_rely(__('模块'))->width(300)->display(function ($modular_rely){
+        $grid->modular_rely(__('模块'))->width(400)->display(function ($modular_rely){
             $result = Modular::whereIn('id', $modular_rely)->pluck('name')->toArray();
             $str = "";
             foreach ($result as $k=>$item)
             {
                 $str .= "<span class='label label-success'>".$item."</span> &nbsp;";
+                if($k > 7){
+                    $str .= "...";
+                    break;
+                }
             }
             return $str;
         });

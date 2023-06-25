@@ -53,6 +53,10 @@ class EvaluatingController extends AdminController
             foreach ($result as $k=>$item)
             {
                 $str .= "<span class='label label-success'>".$item."</span> &nbsp;";
+                if($k > 7){
+                    $str .= "...";
+                    break;
+                }
             }
             return $str;
         });
@@ -70,8 +74,8 @@ class EvaluatingController extends AdminController
         })->width(200);
 
         $grid->column('rating', __('完成率'))->display(function (){
-            return $this->rating."%";
-        })->width(150);
+            return $this->rating;
+        })->progressBar();
 
         $grid->column('created_at', __('创建时间'));
         $grid->column('updated_at', __('修改时间'));
