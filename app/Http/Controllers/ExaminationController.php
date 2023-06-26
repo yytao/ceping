@@ -7,6 +7,7 @@ use App\Models\ExaminationResults;
 use App\Models\Question;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ExaminationController extends Controller
 {
@@ -61,7 +62,33 @@ class ExaminationController extends Controller
             ]), 200);
         }
 
-        $question = Question::whereIn('modular_id', $examination->modular_rely)->get()->toArray();
+        //$question = Question::whereIn('modular_id', $examination->modular_rely)->get()->toArray();
+
+        $question = DB::table('cp_question as cq')
+            ->select('cq.id', 'cq.question', 'cq.modular_id', DB::raw("JSON_EXTRACT(cq.answer, '$') as answer"), 'cm.trigger_modular_id', 'cm.trigger_modular_value')
+            ->leftJoin('cp_modular as cm', 'cq.modular_id', '=', 'cm.id')
+            ->where('cm.type', '=', '1')
+            ->whereIn('cq.modular_id', $examination->modular_rely)->get()->toArray();
+        $question = json_decode(json_encode($question), true);
+
+        $question = array_map(function ($row) {
+            $row['answer'] = $this->processValue($row['answer']);
+            return $row;
+        }, $question);
+
+        shuffle($question);
+
+        $interference = DB::table('cp_question as cq')
+            ->select('cq.id', 'cq.question', 'cq.modular_id', DB::raw("JSON_EXTRACT(cq.answer, '$') as answer"), 'cm.trigger_modular_id', 'cm.trigger_modular_value')
+            ->leftJoin('cp_modular as cm', 'cq.modular_id', '=', 'cm.id')
+            ->where('cm.type', '=', '2')
+            ->whereIn('cq.modular_id', $examination->modular_rely)->get()->toArray();
+        $interference = json_decode(json_encode($interference), true);
+
+        if(!empty($interference))
+        {
+            $question = $this->insertArray($question, $interference);
+        }
 
         return response()->json(([
             'code' => 200,
@@ -69,6 +96,30 @@ class ExaminationController extends Controller
             'msg' => '成功'
         ]), 200);
 
+    }
+
+    public function processValue($value)
+    {
+        return json_decode($value, true) ?: [];
+    }
+
+    public function insertArray($bigArray, $smallArray)
+    {
+        $n = count($bigArray);
+        $m = count($smallArray);
+        $interval = floor($n * 0.3);
+
+        array_splice($bigArray, $interval, 0, array($smallArray[0]));
+
+        $interval = floor($n * 0.6);
+
+        array_splice($bigArray, $interval, 0, array($smallArray[1]));
+
+        $interval = floor($n * 0.9);
+
+        array_splice($bigArray, $interval, 0, array($smallArray[2]));
+
+        return $bigArray;
     }
 
     public function resultSubmit(Request $request)
