@@ -124,6 +124,56 @@ class ExaminationController extends Controller
 
     public function resultSubmit(Request $request)
     {
+        $result = $request->input('result');
+
+        $isExtra = false;
+
+        $whereOne = array_filter($result, function($subArray) {
+            return $subArray['modular_id'] == 3 && $subArray['score'] == 1;
+        });
+        if(floor(count($whereOne) / 5) >= 0.73)
+        {
+            $question['A'] = DB::table('cp_question as cq')
+                ->select('cq.id', 'cq.question', 'cq.modular_id', DB::raw("JSON_EXTRACT(cq.answer, '$') as answer"), 'cm.trigger_modular_id', 'cm.trigger_modular_value')
+                ->leftJoin('cp_modular as cm', 'cq.modular_id', '=', 'cm.id')
+                ->whereIn('cq.modular_id', [13,14,15])->get()->toArray();
+
+            $question['A'] = json_decode(json_encode($question['A']), true);
+            $question['A'] = array_map(function ($row) {
+                $row['answer'] = $this->processValue($row['answer']);
+                return $row;
+            }, $question['A']);
+
+            $isExtra = true;
+        }
+
+        $whereTwo = array_filter($result, function($subArray) {
+            return $subArray['modular_id'] == 5 && $subArray['score'] == 1;
+        });
+        if(floor(count($whereTwo) / 5) >= 0.73)
+        {
+            $question['B'] = DB::table('cp_question as cq')
+                ->select('cq.id', 'cq.question', 'cq.modular_id', DB::raw("JSON_EXTRACT(cq.answer, '$') as answer"), 'cm.trigger_modular_id', 'cm.trigger_modular_value')
+                ->leftJoin('cp_modular as cm', 'cq.modular_id', '=', 'cm.id')
+                ->whereIn('cq.modular_id', [16])->get()->toArray();
+
+            $question['B'] = json_decode(json_encode($question['B']), true);
+            $question['B'] = array_map(function ($row) {
+                $row['answer'] = $this->processValue($row['answer']);
+                return $row;
+            }, $question['B']);
+            $isExtra = true;
+        }
+
+        if($isExtra)
+        {
+            return response()->json(([
+                'code' => 300,
+                'data' => $question,
+                'msg' => '继续做题'
+            ]), 200);
+        }
+
         $data = [];
         $data['examination_id'] = $request->input('id');
         $data['user_id'] = Auth::user()->id;
@@ -147,9 +197,35 @@ class ExaminationController extends Controller
                 'msg' => '发生错误'
             ]), 200);
         }
-
     }
 
 
+    public function resultSubmitExtra(Request $request)
+    {
 
+        $data = [];
+        $data['examination_id'] = $request->input('id');
+        $data['user_id'] = Auth::user()->id;
+        $data['school_id'] = Auth::user()->school_id;
+        $data['result'] = json_encode($request->input('result'));
+
+        dd($request->input('result'));
+        try {
+
+            ExaminationResults::create($data);
+
+            return response()->json(([
+                'code' => 200,
+                'msg' => '您已提交完成'
+            ]), 200);
+
+        } catch (\Exception $exception) {
+
+            dd($exception);
+            return response()->json(([
+                'code' => 400,
+                'msg' => '发生错误'
+            ]), 200);
+        }
+    }
 }

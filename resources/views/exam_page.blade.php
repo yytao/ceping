@@ -246,6 +246,8 @@
 <script>
     var question;
     var answer = []
+    var type = '';
+
     $(function (){
         $.ajaxSetup({
             headers: {
@@ -293,6 +295,26 @@
         document.getElementById('questionZone').scroll({ top: height , left: 0, behavior: 'smooth'})
     }
 
+
+    function nextQuestionExtra(type) {
+        let item = question[type].shift()
+
+        let questionHtml = "<div class='body_left'><img src='/common/image/head2.png' class='touxiang'><span class='bubble'>"+item["question"]+"</span></div>"
+        $("#questionId").val(item["id"]);
+        $("#modularId").val(item["modular_id"]);
+
+        let answerHtml = "";
+        var answer = item["answer"]
+        for( var key in answer){
+            answerHtml += "<div class='btn answerBtnExtra' data-title='"+answer[key].title+"' data-score='"+answer[key].score+"'>"+answer[key].title+"</div>"
+        }
+
+        $("#answerZone").html('')
+        $("#answerZone").append(answerHtml)
+        $("#questionZone").append(questionHtml)
+        var height = document.getElementById('questionZone').scrollHeight;
+        document.getElementById('questionZone').scroll({ top: height , left: 0, behavior: 'smooth'})
+    }
 </script>
 
 <script defer="defer">
@@ -317,13 +339,41 @@
             }else{
                 nextQuestion()
             }
-
         })
+
+        $("#answerZone").on('click', '.answerBtnExtra', function (){
+            var title = $(this).attr('data-title')
+            var score = $(this).attr('data-score')
+            var question_id = $("#questionId").val()
+            var modular_id = $("#modularId").val()
+
+            answer.push({title:title, score:score, question_id:question_id, modular_id:modular_id})
+
+            answerHtml = "<div class='body_right'><span class='bubble_right'>"+title+"</span><img src='/common/image/head2.png' class='touxiang'></div>"
+
+            $("#questionZone").append(answerHtml)
+            var height = document.getElementById('questionZone').scrollHeight;
+            document.getElementById('questionZone').scroll({ top: height , left: 0, behavior: 'smooth'})
+
+            if(Object.keys(question[type]).length == 0){
+
+                if(type == 'A') {
+                    type = 'B'
+                } else {
+                    $("#answerZone").html("<div class='btn submitBtnExtra'>提交</div>")
+                    return;
+                }
+            }
+
+            if((type == 'A' && score == 0) || Object.keys(question['A']).length == 0) {
+                type = 'B'
+            }
+            nextQuestionExtra(type)
+        })
+
 
         $("#answerZone").on('click', '.submitBtn', function (){
             if(confirm("确认要提交吗？")){
-
-                console.log(answer)
 
                 $.ajax({
                     type: 'POST',
@@ -335,17 +385,57 @@
                             alert(resp.msg)
                             window.location.href = "/user"
 
+                        }else if(resp.code == 300) {
+
+                            console.log(resp.data)
+                            question = resp.data
+                            if(resp.data['A']) {
+                                type = 'A'
+                            }else {
+                                type = 'B'
+                            }
+                            nextQuestionExtra(type)
+
                         }else if(resp.code == 400) {
                             alert(resp.msg)
                         }
                     }
                 });
             }
-
         })
 
 
+        $("#answerZone").on('click', '.submitBtnExtra', function (){
+            if(confirm("确认要提交吗？")){
 
+                $.ajax({
+                    type: 'POST',
+                    url: '/exam/resultExtra',
+                    data: {id:{{ $examination->id }}, result:answer},
+                    dataType: 'json',
+                    success: function (resp){
+                        if(resp.code == 200) {
+                            alert(resp.msg)
+                            window.location.href = "/user"
+
+                        }else if(resp.code == 300) {
+
+                            console.log(resp.data)
+                            question = resp.data
+                            if(resp.data['A']) {
+                                type = 'A'
+                            }else {
+                                type = 'B'
+                            }
+                            nextQuestionExtra(type)
+
+                        }else if(resp.code == 400) {
+                            alert(resp.msg)
+                        }
+                    }
+                });
+            }
+        })
 
     })
 
