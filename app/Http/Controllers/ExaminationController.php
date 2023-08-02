@@ -65,7 +65,7 @@ class ExaminationController extends Controller
         //$question = Question::whereIn('modular_id', $examination->modular_rely)->get()->toArray();
 
         $question = DB::table('cp_question as cq')
-            ->select('cq.id', 'cq.question', 'cq.modular_id', DB::raw("JSON_EXTRACT(cq.answer, '$') as answer"), 'cm.trigger_modular_id', 'cm.trigger_modular_value')
+            ->select('cq.id', 'cq.type', 'cq.question', 'cq.modular_id', DB::raw("JSON_EXTRACT(cq.answer, '$') as answer"), 'cm.trigger_modular_id', 'cm.trigger_modular_value')
             ->leftJoin('cp_modular as cm', 'cq.modular_id', '=', 'cm.id')
             ->where('cm.type', '=', '1')
             ->whereIn('cq.modular_id', $examination->modular_rely)->get()->toArray();
@@ -79,12 +79,15 @@ class ExaminationController extends Controller
         shuffle($question);
 
         $interference = DB::table('cp_question as cq')
-            ->select('cq.id', 'cq.question', 'cq.modular_id', DB::raw("JSON_EXTRACT(cq.answer, '$') as answer"), 'cm.trigger_modular_id', 'cm.trigger_modular_value')
+            ->select('cq.id', 'cq.type', 'cq.question', 'cq.modular_id', DB::raw("JSON_EXTRACT(cq.answer, '$') as answer"), 'cm.trigger_modular_id', 'cm.trigger_modular_value')
             ->leftJoin('cp_modular as cm', 'cq.modular_id', '=', 'cm.id')
             ->where('cm.type', '=', '2')
             ->whereIn('cq.modular_id', $examination->modular_rely)->get()->toArray();
         $interference = json_decode(json_encode($interference), true);
-
+        $interference = array_map(function ($row) {
+            $row['answer'] = $this->processValue($row['answer']);
+            return $row;
+        }, $interference);
         if(!empty($interference))
         {
             $question = $this->insertArray($question, $interference);

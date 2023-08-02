@@ -46,12 +46,12 @@ class QuestionController extends AdminController
             }
             return $result;
 
-        })->width(300);
-        $grid->column('modular.name', __('模块'))->width(300);
+        })->width(150);
+        $grid->column('modular.name', __('模块'))->width(150);
         $grid->column('modular.grade_type', __('学段'))->display(function ($title){
             return implode(',', $title);
-        })->width(300);
-
+        })->width(150);
+        $grid->column('type', __('属性'))->width(150);
 
         $grid->column('created_at', __('创建时间'));
         $grid->column('updated_at', __('修改时间'));

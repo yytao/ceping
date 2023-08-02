@@ -285,7 +285,7 @@
         let answerHtml = "";
         var answer = item["answer"]
         for( var key in answer){
-            answerHtml += "<div class='btn answerBtn' data-title='"+answer[key].title+"' data-score='"+answer[key].score+"'>"+answer[key].title+"</div>"
+            answerHtml += "<div class='btn answerBtn' data-type='"+item["type"]+"' data-title='"+answer[key].title+"' data-score='"+answer[key].score+"'>"+answer[key].title+"</div>"
         }
 
         $("#answerZone").html('')
@@ -306,7 +306,7 @@
         let answerHtml = "";
         var answer = item["answer"]
         for( var key in answer){
-            answerHtml += "<div class='btn answerBtnExtra' data-title='"+answer[key].title+"' data-score='"+answer[key].score+"'>"+answer[key].title+"</div>"
+            answerHtml += "<div class='btn answerBtnExtra' data-type='"+item["type"]+"' data-title='"+answer[key].title+"' data-score='"+answer[key].score+"'>"+answer[key].title+"</div>"
         }
 
         $("#answerZone").html('')
@@ -322,10 +322,11 @@
         $("#answerZone").on('click', '.answerBtn', function (){
             var title = $(this).attr('data-title')
             var score = $(this).attr('data-score')
+            var type = $(this).attr('data-type')
             var question_id = $("#questionId").val()
             var modular_id = $("#modularId").val()
 
-            answer.push({title:title, score:score, question_id:question_id, modular_id:modular_id})
+            answer.push({title:title, score:score, type:type, question_id:question_id, modular_id:modular_id})
 
             answerHtml = "<div class='body_right'><span class='bubble_right'>"+title+"</span><img src='/common/image/head2.png' class='touxiang'></div>"
 
@@ -344,10 +345,11 @@
         $("#answerZone").on('click', '.answerBtnExtra', function (){
             var title = $(this).attr('data-title')
             var score = $(this).attr('data-score')
+            var type = $(this).attr('data-type')
             var question_id = $("#questionId").val()
             var modular_id = $("#modularId").val()
 
-            answer.push({title:title, score:score, question_id:question_id, modular_id:modular_id})
+            answer.push({title:title, score:score, type:type, question_id:question_id, modular_id:modular_id})
 
             answerHtml = "<div class='body_right'><span class='bubble_right'>"+title+"</span><img src='/common/image/head2.png' class='touxiang'></div>"
 
