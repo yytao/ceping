@@ -23,6 +23,17 @@ class Modular extends Model
         $this->attributes['grade_type'] = implode(',', $value);
     }
 
+    public function getLevelAttribute($value)
+    {
+        return array_values(json_decode($value, true) ?: []);
+    }
+
+    public function setLevelAttribute($value)
+    {
+        $this->attributes['level'] = json_encode(array_values($value));
+    }
+
+
     /*
      * 一对多关系
      */

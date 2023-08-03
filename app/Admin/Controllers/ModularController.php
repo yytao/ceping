@@ -62,6 +62,11 @@ class ModularController extends AdminController
         $form->text('name', '模块名称')->required();
         $form->multipleSelect('grade_type', '学段')->options(config('customParams.modular_grade_type'))->required();
 
+        $form->table('level', 'Level', function ($table) {
+            $table->text('start', '起始');
+            $table->text('end', '结束');
+            $table->text('msg', '评语');
+        });
         return $form;
     }
 }
