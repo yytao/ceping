@@ -30,4 +30,39 @@ class UsersController extends Controller
         ));
     }
 
+
+    /*
+     * 用户修改信息页面
+     */
+    public function editInfo(Request $request)
+    {
+
+        return view('editInfo');
+    }
+
+    public function editInfoDo(Request $request)
+    {
+
+
+
+
+    }
+
+    /*
+     * 用户修改密码页面
+     */
+    public function editPassWord(Request $request)
+    {
+
+        return view('editPassWord');
+    }
+
+    public function editPassWordDo(Request $request)
+    {
+
+
+    }
+
+
+
 }
