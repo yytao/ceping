@@ -42,7 +42,7 @@ class QuestionController extends AdminController
         $grid->column('answer', __('计分方式'))->display(function ($answer){
             $result = "";
             foreach ($answer as $k=>$item){
-                $result .= $item["title"]." = ".$item["score"]."分<br />";
+                @$result .= $item["title"]." = ".$item["score"]."分<br />";
             }
             return $result;
 
