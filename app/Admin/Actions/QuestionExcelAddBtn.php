@@ -3,6 +3,7 @@
 namespace App\Admin\Actions;
 
 use App\Models\Question;
+use App\Models\Modular;
 use Spatie\SimpleExcel\SimpleExcelReader;
 use Throwable;
 use Encore\Admin\Admin;
@@ -18,12 +19,23 @@ class QuestionExcelAddBtn extends Action
     public function handle()
     {
         try {
-            return null;
-            $data = SimpleExcelReader::create("C:\Users\chisaTy\Desktop\question.xlsx")->getRows();
+
+            $data = SimpleExcelReader::create("D:\GitBase\ceping\public\question_last.xlsx")->getRows();
+
+            $modular_id = 0;
 
             foreach ($data as $k=>$item){
 
-                $creteData["question"] = $item["title"];
+                if(!empty($item["modular"])) {
+
+                    $modular = Modular::where('name', trim($item["modular"]))->first();
+
+                    $modular_id = $modular->id??0;
+                }
+
+                $createData["modular_id"] = $modular_id;
+
+                $createData["question"] = $item["title"];
 
                 if(strpos($item["score"], '，')){
 
@@ -36,7 +48,7 @@ class QuestionExcelAddBtn extends Action
                         $score[$k]['score'] = rtrim($res[1], '分');
                     }
 
-                    $creteData["answer"] = ($score);
+                    $createData["answer"] = ($score);
                 }
 
                 if(strpos($item["score"], '、')){
@@ -44,15 +56,28 @@ class QuestionExcelAddBtn extends Action
 
                     $score = [];
                     foreach ($questionScore as $k=>$it){
-                        $res = explode('—', $it);
+                        $res = explode('-', $it);
                         $score[$k]['title'] = $res[1];
                         $score[$k]['score'] = rtrim($res[0], '分');
                     }
 
-                    $creteData["answer"] = ($score);
+                    $createData["answer"] = ($score);
                 }
 
-                Question::create($creteData);
+                if(strpos($item["score"], '；')){
+                    $questionScore = explode('；', $item["score"]);
+
+                    $score = [];
+                    foreach ($questionScore as $k=>$it){
+                        $res = explode('=', $it);
+                        $score[$k]['title'] = $res[0];
+                        $score[$k]['score'] = rtrim($res[1], '分');
+                    }
+
+                    $createData["answer"] = ($score);
+                }
+
+                Question::create($createData);
             }
 
 
