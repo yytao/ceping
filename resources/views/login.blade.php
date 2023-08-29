@@ -22,7 +22,7 @@
 
     <meta name="csrf-token" content="<?= csrf_token() ?>">
 
-    <title>登录</title>
+    <title>登录 - 中小学生心理评估管理平台</title>
     <style>
         * {
             margin: 0;
@@ -63,6 +63,7 @@
             font-family: cursive;
             font-weight: bolder;
             font-size: 34px;
+            padding-bottom: 50px;
         }
 
         .text {
@@ -297,6 +298,14 @@
                 width: 35%;
             }
         }
+
+        .footer{
+            position: absolute;
+            bottom: 50px;
+            text-align: center;
+            font-size: 15px;
+            color: gray;
+        }
     </style>
 </head>
 
@@ -304,13 +313,9 @@
     <div class="container">
         <div class="login-wrapper">
             <div class="header">
-                <div class="head">
-                    <img src="/common/image/chongqing_University.png" alt="">
-                </div>
                 <div class="head_name">
-                    重慶醫科大學
+                    中小学生心理评估管理平台
                 </div>
-                <div class="text">chongqing Medical University</div>
             </div>
             <div class="form-wrapper">
                 <div style="display: flex;justify-content: space-between;height: 25px;
@@ -324,14 +329,19 @@
 
                 <div class="main_bar" leftmargin="0">
                     <img id="captcha" src="{{captcha_src()}}" onclick="this.src='{{captcha_src()}}'+Math.random()" title="点击图片重新获取验证码" />
-                    <p style="margin-right: 265px;margin-top: 10px;" id="change_click">换一个</p>
+                    <p style="margin-right: 45%;margin-top: 10px;" id="change_click">换一个</p>
 
                 </div>
 
                 <div class="sigin_btn btn" id="signIn">登录</div>
             </div>
 
+            <div class="footer">
+                技术支持：海南心智智能信息咨询有限公司
+            </div>
+
         </div>
+
     </div>
 </body>
 <script src="/common/js/jquery-3.7.0.min.js"></script>

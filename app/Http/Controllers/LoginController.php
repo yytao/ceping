@@ -49,7 +49,7 @@ class LoginController extends Controller
             'msg' => '用户名或密码不正确！请重新填写！',
         ]);
     }
-
+    
     /*
      * 退出登录方法
      */

@@ -17,8 +17,20 @@ class UsersController extends Controller
         if(!Auth::check()){
             return redirect("/");
         }
-
         $user = Auth::user();
+
+        //修改逻辑直接跳转到exam页
+        $examination = Examination::where("school_id", $user->school_id)->first();
+        if(!empty($examination) && $examination->id) {
+
+            return redirect("/exam/$examination->id");
+
+        } else {
+            echo "错误，未指定试卷";
+            die;
+        }
+
+
         //由于更改了school_rely为school_id，所以不用此语句检索了
 //        $examination = Examination::whereRaw("FIND_IN_SET(?, school_rely)", [$user->school_id])->get();
 

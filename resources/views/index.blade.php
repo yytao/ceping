@@ -20,7 +20,7 @@
     <!-- 苹果手机控制状态栏显示样式 -->
     <meta name="viewport"
         content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1,viewport-fit=cover">
-    <title>首页</title>
+    <title>中小学生心理评估管理平台</title>
     <style>
         * {
             margin: 0;

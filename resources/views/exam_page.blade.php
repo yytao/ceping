@@ -21,7 +21,7 @@
     <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1,viewport-fit=cover">
     <meta name="csrf-token" content="<?= csrf_token() ?>">
 
-    <title>心测</title>
+    <title>{{ $examination->name }} - 中小学生心理评估管理平台</title>
     <style>
         * {
             margin: 0;
@@ -219,15 +219,17 @@
     <div class="min_wrap">
         <div class="wrap">
             <header>
-                <p>
+                <p style="font-size: 34px;">
                     {{ $examination->name }}
                 </p>
+
             </header>
+
+            <p style="font-size: 15px;">
+                <span id="current" style="font-size: 24px;color: #1c94c4;"> 1 </span> / <span id="total"></span>题
+            </p>
+
             <div class="body_class" id="questionZone">
-
-
-
-
 
             </div>
 
@@ -268,6 +270,7 @@
                 }else if(resp.code == 200) {
                     $("#questionZone").html('')
                     question = resp.data
+                    $("#total").html(question.length)
                     nextQuestion()
                 }
             }
@@ -275,7 +278,15 @@
     });
 
     var number = 0;
+    var answerCount = 0;    //计数，只保留前三个题目历史
     function nextQuestion() {
+        if(answerCount >= 3) {
+            $("#questionZone div:first").remove()
+            $("#questionZone div:first").remove()
+        } else {
+            answerCount++;
+        }
+
         let item = question.shift()
 
         let questionHtml = "<div class='body_left'><img src='/common/image/head2.png' class='touxiang'><span class='bubble'>"+item["question"]+"</span></div>"
@@ -306,7 +317,7 @@
         let answerHtml = "";
         var answer = item["answer"]
         for( var key in answer){
-            answerHtml += "<div class='btn answerBtnExtra' data-type='"+item["type"]+"' data-title='"+answer[key].title+"' data-score='"+answer[key].score+"'>"+answer[key].title+"</div>"
+            answerHtml += "<div class='btn answerBtnExtra' data-type='"+type+"' data-title='"+answer[key].title+"' data-score='"+answer[key].score+"'>"+answer[key].title+"</div>"
         }
 
         $("#answerZone").html('')
@@ -319,6 +330,7 @@
 
 <script defer="defer">
     $(function (){
+        var current = 1;
         $("#answerZone").on('click', '.answerBtn', function (){
             var title = $(this).attr('data-title')
             var score = $(this).attr('data-score')
@@ -338,6 +350,8 @@
 
                 $("#answerZone").html("<div class='btn submitBtn'>提交</div>")
             }else{
+                current++
+                $("#current").html(current)
                 nextQuestion()
             }
         })
@@ -356,6 +370,8 @@
             $("#questionZone").append(answerHtml)
             var height = document.getElementById('questionZone').scrollHeight;
             document.getElementById('questionZone').scroll({ top: height , left: 0, behavior: 'smooth'})
+
+            console.log(question)
 
             if(Object.keys(question[type]).length == 0){
 
@@ -396,6 +412,8 @@
                             }else {
                                 type = 'B'
                             }
+                            $("#total").html(question.length)
+                            $("#current").html("1")
                             nextQuestionExtra(type)
 
                         }else if(resp.code == 400) {
@@ -422,13 +440,13 @@
 
                         }else if(resp.code == 300) {
 
-                            console.log(resp.data)
                             question = resp.data
                             if(resp.data['A']) {
                                 type = 'A'
                             }else {
                                 type = 'B'
                             }
+
                             nextQuestionExtra(type)
 
                         }else if(resp.code == 400) {
