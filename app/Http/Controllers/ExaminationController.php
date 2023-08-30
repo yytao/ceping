@@ -35,6 +35,9 @@ class ExaminationController extends Controller
     }
 
 
+    /*
+     * 页面刷新时，获取所有问题
+     */
     public function getQuestion(Request $request)
     {
         $user = Auth::user();
@@ -62,10 +65,8 @@ class ExaminationController extends Controller
             ]), 200);
         }
 
-        //$question = Question::whereIn('modular_id', $examination->modular_rely)->get()->toArray();
-
         $question = DB::table('cp_question as cq')
-            ->select('cq.id', 'cq.type', 'cq.question', 'cq.modular_id', DB::raw("JSON_EXTRACT(cq.answer, '$') as answer"), 'cm.trigger_modular_id', 'cm.trigger_modular_value')
+            ->select('cq.id', 'cm.status', 'cq.question', 'cq.modular_id', DB::raw("JSON_EXTRACT(cq.answer, '$') as answer"), 'cm.trigger_modular_id', 'cm.trigger_modular_value')
             ->leftJoin('cp_modular as cm', 'cq.modular_id', '=', 'cm.id')
             ->where('cm.type', '=', '1')
             ->whereIn('cq.modular_id', $examination->modular_rely)->get()->toArray();
@@ -79,7 +80,7 @@ class ExaminationController extends Controller
         shuffle($question);
 
         $interference = DB::table('cp_question as cq')
-            ->select('cq.id', 'cq.type', 'cq.question', 'cq.modular_id', DB::raw("JSON_EXTRACT(cq.answer, '$') as answer"), 'cm.trigger_modular_id', 'cm.trigger_modular_value')
+            ->select('cq.id', 'cm.status', 'cq.question', 'cq.modular_id', DB::raw("JSON_EXTRACT(cq.answer, '$') as answer"), 'cm.trigger_modular_id', 'cm.trigger_modular_value')
             ->leftJoin('cp_modular as cm', 'cq.modular_id', '=', 'cm.id')
             ->where('cm.type', '=', '2')
             ->whereIn('cq.modular_id', $examination->modular_rely)->get()->toArray();
@@ -125,6 +126,10 @@ class ExaminationController extends Controller
         return $bigArray;
     }
 
+    /*
+     * 第一个提交
+     * 验证钩子问题
+     */
     public function resultSubmit(Request $request)
     {
         $result = $request->input('result');
@@ -137,7 +142,7 @@ class ExaminationController extends Controller
         if(floor(count($whereOne) / 5) >= 0.73)
         {
             $question['A'] = DB::table('cp_question as cq')
-                ->select('cq.id', 'cq.question', 'cq.modular_id', DB::raw("JSON_EXTRACT(cq.answer, '$') as answer"), 'cm.trigger_modular_id', 'cm.trigger_modular_value')
+                ->select('cq.id', 'cq.question', 'cm.status', 'cq.modular_id', DB::raw("JSON_EXTRACT(cq.answer, '$') as answer"), 'cm.trigger_modular_id', 'cm.trigger_modular_value')
                 ->leftJoin('cp_modular as cm', 'cq.modular_id', '=', 'cm.id')
                 ->whereIn('cq.modular_id', [13,14,15])->get()->toArray();
 
@@ -156,7 +161,7 @@ class ExaminationController extends Controller
         if(floor(count($whereTwo) / 5) >= 0.73)
         {
             $question['B'] = DB::table('cp_question as cq')
-                ->select('cq.id', 'cq.question', 'cq.modular_id', DB::raw("JSON_EXTRACT(cq.answer, '$') as answer"), 'cm.trigger_modular_id', 'cm.trigger_modular_value')
+                ->select('cq.id', 'cq.question', 'cm.status', 'cq.modular_id', DB::raw("JSON_EXTRACT(cq.answer, '$') as answer"), 'cm.trigger_modular_id', 'cm.trigger_modular_value')
                 ->leftJoin('cp_modular as cm', 'cq.modular_id', '=', 'cm.id')
                 ->whereIn('cq.modular_id', [16])->get()->toArray();
 
@@ -194,7 +199,6 @@ class ExaminationController extends Controller
 
         } catch (\Exception $exception) {
 
-            dd($exception);
             return response()->json(([
                 'code' => 400,
                 'msg' => '发生错误'
@@ -203,6 +207,9 @@ class ExaminationController extends Controller
     }
 
 
+    /*
+     * 第二次提交
+     */
     public function resultSubmitExtra(Request $request)
     {
 
@@ -212,7 +219,6 @@ class ExaminationController extends Controller
         $data['school_id'] = Auth::user()->school_id;
         $data['result'] = json_encode($request->input('result'));
 
-        dd($request->input('result'));
         try {
 
             ExaminationResults::create($data);
@@ -224,7 +230,6 @@ class ExaminationController extends Controller
 
         } catch (\Exception $exception) {
 
-            dd($exception);
             return response()->json(([
                 'code' => 400,
                 'msg' => '发生错误'
