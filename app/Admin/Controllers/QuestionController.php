@@ -42,7 +42,7 @@ class QuestionController extends AdminController
         $grid->column('answer', __('计分方式'))->display(function ($answer){
             $result = "";
             foreach ($answer as $k=>$item){
-                $result .= $item["title"]." = ".$item["score"]."分<br />";
+                @$result .= $item["title"]." = ".$item["score"]."分<br />";
             }
             return $result;
 
@@ -51,7 +51,10 @@ class QuestionController extends AdminController
         $grid->column('modular.grade_type', __('学段'))->display(function ($title){
             return implode(',', $title);
         })->width(150);
-        $grid->column('type', __('属性'))->width(150);
+        $grid->column('modular.status', __('属性'))->using([
+            "1"=>"积极",
+            "2"=>"消极",
+        ])->width(150);
 
         $grid->column('created_at', __('创建时间'));
         $grid->column('updated_at', __('修改时间'));

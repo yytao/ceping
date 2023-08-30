@@ -65,7 +65,7 @@ class LoginController extends Controller
 
         return response()->json([
             'statusCode' => 400,
-            'msg' => '用户名或密码不正确！请重新填写！',
+            'msg' => '姓名或学号不正确！请重新填写！',
         ]);
     }
 

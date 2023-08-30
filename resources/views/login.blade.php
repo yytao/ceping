@@ -323,8 +323,8 @@
                     <span id="msg"></span>
                 </div>
 
-                <input type="text" name="name" placeholder="用户名" class="input-item">
-                <input type="password" name="password" placeholder="密码" class="input-item">
+                <input type="text" name="name" placeholder="姓名" class="input-item">
+                <input type="password" name="password" placeholder="学号" class="input-item">
                 <input type="text" name="captcha" placeholder="验证码" class="input-item" value="" />
 
                 <div class="main_bar" leftmargin="0">
