@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Examination;
+use App\Models\ExaminationResults;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -38,6 +40,23 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
+            $user = Auth::user();
+
+            $examination = Examination::where("school_id", $user->school_id)->first();
+            $isTest = ExaminationResults::where('examination_id', $examination->id)
+                ->where('user_id', $user->id)
+                ->first();
+
+            if(!empty($isTest) && $isTest->id) {
+                Auth::logout();
+                Session::flush();
+
+                return response()->json([
+                    'statusCode' => 400,
+                    'msg' => '您已经做过测试了！请勿重复答题',
+                ]);
+            }
+
             return response()->json([
                 'statusCode' => 200,
                 'msg' => '验证成功！',
@@ -49,7 +68,7 @@ class LoginController extends Controller
             'msg' => '用户名或密码不正确！请重新填写！',
         ]);
     }
-    
+
     /*
      * 退出登录方法
      */
