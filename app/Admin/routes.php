@@ -37,11 +37,18 @@ Route::group([
     //班级进度
     $router->resource('invalidExam', InvalidExamController::class);
 
+    //学校评估报告
+    $router->resource('schoolReport', SchoolReportController::class);
 
     //题库管理
     $router->resource('question', QuestionController::class);
 
     //模块管理
     $router->resource('modular', ModularController::class);
+
+
+    //模块管理
+    $router->get('schoolReportPage/{school_id}', 'SchoolReportController@schoolReportPage');
+
 
 });

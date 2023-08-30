@@ -166,6 +166,8 @@ return [
          * Package Service Providers...
          */
         Mews\Captcha\CaptchaServiceProvider::class,
+        Barryvdh\Snappy\ServiceProvider::class,
+
 
         /*
          * Application Service Providers...
@@ -232,6 +234,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         'Captcha' => Mews\Captcha\Facades\Captcha::class,
+        'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
+        'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
     ],
 
 ];
