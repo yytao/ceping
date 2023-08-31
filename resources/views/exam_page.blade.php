@@ -440,19 +440,8 @@
                     success: function (resp){
                         if(resp.code == 200) {
                             alert(resp.msg)
-                            window.location.href = "/user"
-
-                        }else if(resp.code == 300) {
-
-                            question = resp.data
-                            if(resp.data['A']) {
-                                type = 'A'
-                            }else {
-                                type = 'B'
-                            }
-
-                            nextQuestionExtra(type)
-
+                            window.location.href = "/logout"
+                            
                         }else if(resp.code == 400) {
                             alert(resp.msg)
                         }
