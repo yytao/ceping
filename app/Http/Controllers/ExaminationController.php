@@ -139,6 +139,8 @@ class ExaminationController extends Controller
         $whereOne = array_filter($result, function($subArray) {
             return $subArray['modular_id'] == 3 && $subArray['score'] == 1;
         });
+        $question['A'] = [];
+
         if(floor(count($whereOne) / 5) >= 0.73)
         {
             $question['A'] = DB::table('cp_question as cq')
@@ -158,6 +160,7 @@ class ExaminationController extends Controller
         $whereTwo = array_filter($result, function($subArray) {
             return $subArray['modular_id'] == 5 && $subArray['score'] == 1;
         });
+        $question['B'] = [];
         if(floor(count($whereTwo) / 5) >= 0.73)
         {
             $question['B'] = DB::table('cp_question as cq')

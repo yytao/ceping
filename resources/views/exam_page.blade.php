@@ -390,6 +390,10 @@
             }
 
             if((type == 'A' && score == 0) || Object.keys(question['A']).length == 0) {
+                if(Object.keys(question['B']).length == 0){
+                    $("#answerZone").html("<div class='btn submitBtnExtra'>提交</div>")
+                    return;
+                }
                 type = 'B'
             }
             nextQuestionExtra(type)
@@ -413,7 +417,7 @@
 
                             console.log(resp.data)
                             question = resp.data
-                            if(resp.data['A']) {
+                            if(resp.data['A'] && Object.keys(question['A']).length>0) {
                                 type = 'A'
                             }else {
                                 type = 'B'
