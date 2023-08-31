@@ -405,7 +405,7 @@
                     success: function (resp){
                         if(resp.code == 200) {
                             alert(resp.msg)
-                            window.location.href = "/user"
+                            window.location.href = "/logout"
 
                         }else if(resp.code == 300) {
 
@@ -441,7 +441,7 @@
                         if(resp.code == 200) {
                             alert(resp.msg)
                             window.location.href = "/logout"
-                            
+
                         }else if(resp.code == 400) {
                             alert(resp.msg)
                         }
