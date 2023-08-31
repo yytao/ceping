@@ -34,12 +34,14 @@
 
         body {
             height: 100%;
+            background-color: #F6F9FE;
         }
 
         .wrap {
             margin: 0;
             padding: 0;
             width: 70%;
+            background-color: #FFF;
         }
 
         header {
