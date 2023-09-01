@@ -105,7 +105,12 @@ class SchoolReportController extends AdminController
             //return "";
         }
 
-        return view("admin.school_report");
+        return view("admin.school_report", compact(
+            "examination",
+            "answerResult",
+
+
+        ));
     }
 
 
