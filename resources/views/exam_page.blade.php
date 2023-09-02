@@ -310,8 +310,14 @@
 
 
     function nextQuestionExtra(type) {
+        if(answerCount >= 3) {
+            $("#questionZone div:first").remove()
+            $("#questionZone div:first").remove()
+        } else {
+            answerCount++;
+        }
+        
         let item = question[type].shift()
-
         let questionHtml = "<div class='body_left'><img src='/common/image/head2.png' class='touxiang'><span class='bubble'>"+item["question"]+"</span></div>"
         $("#questionId").val(item["id"]);
         $("#modularId").val(item["modular_id"]);
