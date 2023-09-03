@@ -21,14 +21,15 @@ class generateReport extends RowAction
 
         $snappy = App::make('snappy.pdf');
 
-
-        $html = '<h1>dongxuemin</h1>';
-
         // 从 HTML 字符串生成 PDF
-        $snappy->generateFromHtml($html, '/storage/app/report/report'.$examination->school_id.'.pdf');
+        //$html = '<h1>dongxuemin</h1>';
+        //$snappy->generateFromHtml($html, '/storage/app/report/report'.$examination->school_id.'.pdf');
 
-        //$snappy->generate(config('app.url')."/admin/schoolReportPage/".$examination->school_id, '/storage/app/report/report'.$examination->school_id.'.pdf');
+        $snappy->generate(config('app.url')."/admin/schoolReportPage/".$examination->school_id, '/storage/app/report/report'.$examination->school_id.'.pdf');
 
+        $examination->report_file = '/storage/app/report/report'.$examination->school_id.'.pdf';
+        $examination->save();
+        
         return $this->response()->success('报告已生成！')->refresh();
     }
 
