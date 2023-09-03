@@ -316,7 +316,7 @@
         } else {
             answerCount++;
         }
-        
+
         let item = question[type].shift()
         let questionHtml = "<div class='body_left'><img src='/common/image/head2.png' class='touxiang'><span class='bubble'>"+item["question"]+"</span></div>"
         $("#questionId").val(item["id"]);
