@@ -25,7 +25,7 @@ class generateReport extends RowAction
         //$html = '<h1>dongxuemin</h1>';
         //$snappy->generateFromHtml($html, '/storage/app/report/report'.$examination->school_id.'.pdf');
 
-        $snappy->generate(config('app.url')."/admin/schoolReportPage/".$examination->school_id, app_path('/storage/').'app/report/report'.$examination->school_id.'.pdf');
+        $snappy->generate(config('app.url')."/admin/schoolReportPage/".$examination->school_id, storage_path()('/app/').'report/report'.$examination->school_id.'.pdf');
 
         $examination->report_file = '/app/report/report'.$examination->school_id.'.pdf';
         $examination->save();
