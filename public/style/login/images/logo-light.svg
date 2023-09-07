@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100" height="35" viewBox="0 0 100 35">
+  <defs>
+    <style>
+      .cls-1 {
+        font-size: 48px;
+        font-family: FangSong;
+      }
+
+      .cls-1, .cls-2 {
+        fill: #fff;
+        text-anchor: middle;
+        text-transform: uppercase;
+      }
+
+      .cls-2 {
+        font-size: 36px;
+        font-family: Arial;
+      }
+    </style>
+  </defs>
+  <image id="图层_1" data-name="图层 1" x="3" y="4" width="25" height="26" xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAaCAYAAABCfffNAAADkUlEQVRIiXWWeYiWVRTGn3HUAh2jBTIyFQrDjDYNmqQgyH8y0wSVNKIs+sccClxCMSIbFaMCsUVqxhGlIQhXcCFbLNKQoYWw0mIyEVHBXFvGUX9xhufS6fXzwP2+s95zz7nnnPvWAaoBL0i6QdIXktZLmi1pqKQzkuZKGiKpSVKDpMGS3pS0rdZGPRBOKmsg/8FY4OpEL7BuZ+JtBBqAXsBo4Dng/rynrDDQK+hGG583/bzpfabfTvK7zZsJHEiON1SdfAJ0eY0BBlixy0prTD/j0xa42fJv+T+Es6aqk1+TyssWFAh8ofHbgHuSw2zb5Ygvr5H+HicR2n4rd1qw3HRjiuwhp+ekdZaZH5HUmTcN+AjoALb50CNC8KIVfrLRKNPn0r00Oa2RoslAf+v+bvlI4AK1YUko/ODLv8sqx204yHTIVyTz0F1s/Kqkh6Mb66hfB44Ar8Rm3Q458Hes3JFymi/2K/NmAK1O02ngTNIfCgxOdJ/4OegNnjWzxXS36z54j/h+An8AGGb84XSAdZVkheNmYIi8eYGnbTzF90Hqj1g/Jt3NvpuotKnA476vlyp6S4rxzMRsTZs+AbQDfe0sYD6wxf1T9G53hLckXkT+S9yN7FnugUPJ2fvujZD1M+8boD5t9MElKmpDmiANpfH2uWrk6vg8GWw1f3PixYFGGP8ZmO2ULfBBCkQjDwjj3Ym51AOxnDT64jHgTtNvAW8Y/9DpCPw6V9Vlpq8A1nrPlXL4LVwM61Mj4rItzl9N6ZObskD01QTzoxCmK03Sa4BZQBuw0waLLdtd4xD3AaeAccAdwCJgR5J/mmfXX2Y+WRls75k/KTXgb16livBd9AZuNO964DvL9kaVlY5eBQy30g6nQ2lwvlY5wLXAMeAf01utdzQ1cJkUzfKUjf+JnpwFbjV/V+LFHfyZ6EaX95XpccOO6o23Kp2+QFvCp1p+L/CHee1ObXk7mt1T+VW9kGQrlCbsqWSIwx3vsh3lKPa4+6NPNgHzXK6ksb/U9FNlmuePgtLdMTDPGh9eqahuLobQm2Puo+mJ/jhXF64weSZho/wMP1h5puMFjBUQLRB3EBCvYrE7XJz0lvS9pE3+QrpJ0n5JLZJG+zvrXUnbJXVKPfq9JH0tqV7SYUldkuokHZG01/hB79sDYbRaUofpdknnJJ2QdNoOtlj2maSddvK3pD6SVnnzfsa/tJM2H1aS9C+D8wSHNTgvegAAAABJRU5ErkJggg=="/>
+  <text id="心智智能" class="cls-1" transform="translate(64.586 16.073) scale(0.3 0.297)"><tspan x="0">心智智能</tspan></text>
+  <text id="Cognitive_AI" data-name="Cognitive AI" class="cls-2" transform="translate(65.079 29.084) scale(0.3 0.297)"><tspan x="0">Cognitive AI</tspan></text>
+</svg>

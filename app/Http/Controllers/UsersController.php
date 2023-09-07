@@ -15,7 +15,7 @@ class UsersController extends Controller
     public function index()
     {
         if(!Auth::check()){
-            return redirect("/");
+            return redirect("/login");
         }
         $user = Auth::user();
 

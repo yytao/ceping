@@ -8,49 +8,26 @@ use App\Models\Modular;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Knp\Snappy\Pdf;
-
 
 class IndexController extends Controller
 {
     //
-
     public function index()
     {
         if(Auth::check()) {
             return redirect("/user");
         }
 
-        return redirect("/user");
-
-        return view("index");
-    }
-
-    public function exam()
-    {
-        return view("exam_page");
+        return redirect("/login");
     }
 
 
-    public function generate($school_id)
-    {
-
-        $examination = Examination::where("school_id", $school_id)->first();
-        if(!empty($examination->report_file)) {
-            dd("error");
-        }
-
-        $snappy = new Pdf(base_path('vendor/h4cc/wkhtmltopdf-amd64/bin/wkhtmltopdf-amd64'));
-        $snappy->generateFromHtml('<p>Some content</p>', base_path("/storage/app/report").'/report'.$school_id.'.pdf');
-
-        //$snappy->generateFromHtml($html, base_path("/storage/app/report").'/report'.$school_id.'.pdf');
-
-    }
-
-
+    /*
+     * 显示报告的html页，用来生成pdf
+     * 处理数据
+     */
     public function schoolReportPage(Request $request, $school_id)
     {
-
         $examination = Examination::where('school_id', $school_id)->first();
         if(empty($examination)) {
             return "";
@@ -184,8 +161,6 @@ class IndexController extends Controller
             "examination",
             "answerResult",
             "data",
-
-
         ));
     }
 

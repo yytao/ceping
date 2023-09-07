@@ -1,0 +1,235 @@
+.content {
+  height: 100vh;
+  background-size: cover;
+  background-color: #2D97BF;
+  background-image: url("../img/backgroun.png");
+}
+.content .contetn_box {
+  margin: 0 11%;
+  padding-top: 60px;
+  height: calc(100% - 40px);
+}
+.content .contetn_box .content_name {
+  padding-left: 90px;
+  width: calc(100% - 90px);
+  font-size: 24px;
+  font-family: Alibaba;
+  font-weight: normal;
+  color: #FFFFFF;
+  position: relative;
+}
+.content .contetn_box .content_name::before {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 25px;
+  height: 29px;
+  background-image: url("../img/tit-icon.png");
+  left: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.content .contetn_box .content_info {
+  width: 100%;
+  margin-top: 20px;
+  height: calc(100% - 130px);
+  background-color: #fff;
+  box-shadow: 1px 1px 25px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+.content .contetn_box .content_info .info_title {
+  height: 80px;
+  background-color: #fff;
+  font-size: 20px;
+  font-family: Alibaba;
+  font-weight: normal;
+  color: #666666;
+  line-height: 80px;
+  padding-left: 34px;
+  border-bottom: #E5E5E5 1px solid;
+}
+.content .contetn_box .content_info .info_box {
+  display: flex;
+  height: calc(100% - 81px);
+}
+.content .contetn_box .content_info .info_box .info_select {
+  width: 30%;
+  background-color: #fff;
+}
+.content .contetn_box .content_info .info_box .info_select .user_info {
+  margin-top: 65px;
+}
+.content .contetn_box .content_info .info_box .info_select .user_info .user_img {
+  margin: 0 auto;
+  width: 90px;
+  height: 90px;
+  background-color: #1D88F6;
+  border-radius: 50%;
+  display: flex;
+  justify-content: end;
+  align-items: flex-end;
+}
+.content .contetn_box .content_info .info_box .info_select .user_info .user_img span {
+  text-align: center;
+  line-height: 90px;
+  color: #fff;
+}
+.content .contetn_box .content_info .info_box .info_select .user_info .user_img .user_plus {
+  width: 24px;
+  height: 24px;
+  background: #009975;
+  border: 4px solid #FFFFFF;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 0.8;
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+}
+.content .contetn_box .content_info .info_box .info_select .user_info .user_name {
+  font-size: 16px;
+  font-family: Adobe Heiti Std;
+  font-weight: normal;
+  color: #2F3C40;
+  line-height: 1;
+  margin-top: 22px;
+  text-align: center;
+}
+.content .contetn_box .content_info .info_box .info_select .user_info .user_code {
+  font-size: 14px;
+  font-family: Adobe Heiti Std;
+  font-weight: normal;
+  color: #93989E;
+  margin-top: 10px;
+  text-align: center;
+}
+.content .contetn_box .content_info .info_box .info_select .user_info .from_class {
+  font-size: 14px;
+  font-family: Adobe Heiti Std;
+  font-weight: normal;
+  color: #93989E;
+  margin-top: 10px;
+  text-align: center;
+}
+.content .contetn_box .content_info .info_box .info_select .massage_select {
+  max-height: calc(100% - 336px);
+  overflow-y: auto;
+  margin: 75px 14px 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+.content .contetn_box .content_info .info_box .info_select .massage_select .select_item {
+  width: 40px;
+  height: 40px;
+  background: #FFFFFF;
+  border-radius: 6px;
+  border: 1px solid #0099FF;
+  text-align: center;
+  color: #fff;
+  font-size: 14px;
+  font-family: Poppins;
+  font-weight: 600;
+  line-height: 40px;
+  color: #0A1042;
+  margin-left: 12px;
+  margin-bottom: 12px;
+  cursor: pointer;
+}
+.content .contetn_box .content_info .info_box .info_select .massage_select .select_item.active {
+  background: #0099FF;
+  border-radius: 6px;
+  border: 1px solid #fff;
+  color: #FFFFFF;
+}
+.content .contetn_box .content_info .info_box .info_dialog {
+  width: 70%;
+  background-color: #F8F9FD;
+}
+.content .contetn_box .content_info .info_box .info_dialog .dialog_box {
+  height: calc(100% - 143px);
+  border-bottom: #E5E5E5 1px solid;
+  overflow: auto;
+}
+.content .contetn_box .content_info .info_box .info_dialog .dialog_box .dialog_massage {
+  position: relative;
+}
+.content .contetn_box .content_info .info_box .info_dialog .dialog_box .dialog_massage.Robot {
+  padding-left: 87px;
+  margin-top: 40px;
+}
+.content .contetn_box .content_info .info_box .info_dialog .dialog_box .dialog_massage.Robot::before {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 44px;
+  height: 44px;
+  background-image: url("../img/robot.png");
+  background-size: cover;
+  top: 0;
+  left: 24px;
+}
+.content .contetn_box .content_info .info_box .info_dialog .dialog_box .dialog_massage.Robot .massage {
+  min-height: 44px;
+  display: inline-block;
+  padding: 10px 34px 10px 20px;
+  max-width: 70%;
+  text-align: justify;
+  font-size: 16px;
+  font-family: Adobe Heiti Std;
+  font-weight: normal;
+  color: #2F3C40;
+  line-height: 24px;
+  background-color: #fff;
+  border-radius: 10px;
+}
+.content .contetn_box .content_info .info_box .info_dialog .dialog_box .dialog_massage.user {
+  text-align: end;
+  padding-right: 55px;
+  margin-top: 20px;
+}
+.content .contetn_box .content_info .info_box .info_dialog .dialog_box .dialog_massage.user .massage {
+  min-height: 44px;
+  display: inline-block;
+  padding: 10px 16px 10px 22px;
+  font-size: 16px;
+  font-family: Adobe Heiti Std;
+  font-weight: normal;
+  color: #FFFFFF;
+  line-height: 24px;
+  background-color: #0099FF;
+  border-radius: 10px;
+}
+.content .contetn_box .content_info .info_box .info_dialog .select_box {
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.content .contetn_box .content_info .info_box .info_dialog .select_box .select_item {
+  cursor: pointer;
+  margin: 0 25px;
+  width: 73px;
+  height: 53px;
+  background: #0099FF;
+  border-radius: 10px;
+  color: #fff;
+  text-align: center;
+  line-height: 53px;
+}
+.content .contetn_box .company_info {
+  margin: 27px 0 0 21px;
+  font-size: 16px;
+  font-family: Adobe Heiti Std;
+  font-weight: normal;
+  color: #FFFFFF;
+  line-height: 24px;
+}
+.content .contetn_box .company_mobile {
+  margin: 4px 0 0 21px;
+  font-size: 16px;
+  font-family: Adobe Heiti Std;
+  font-weight: normal;
+  color: #FFFFFF;
+  line-height: 24px;
+}

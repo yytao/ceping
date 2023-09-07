@@ -17,7 +17,7 @@ class LoginController extends Controller
     public function loginView()
     {
         if(Auth::check()){
-            return redirect("/");
+            return redirect("/user");
         }
         return view("login");
     }
@@ -31,10 +31,9 @@ class LoginController extends Controller
         $credentials = $request->only('name', 'password');
 
         if(!captcha_check($request->input("captcha"))) {
-            return response()->json([
-                'statusCode' => 401,
-                'msg' => '验证码不正确！',
-            ]);
+
+            return redirect('login//')->withErrors(['error'=>'验证码不正确！']);
+
         }
 
         if (Auth::attempt($credentials)) {
@@ -51,22 +50,18 @@ class LoginController extends Controller
                 Auth::logout();
                 Session::flush();
 
+                return redirect('login//')->withErrors(['error'=>'您已经做过测试了！请勿重复答题！']);
                 return response()->json([
                     'statusCode' => 400,
-                    'msg' => '您已经做过测试了！请勿重复答题',
+                    'msg' => '',
                 ]);
             }
 
-            return response()->json([
-                'statusCode' => 200,
-                'msg' => '验证成功！',
-            ]);
+            return redirect('user//');
         }
 
-        return response()->json([
-            'statusCode' => 400,
-            'msg' => '姓名或学号不正确！请重新填写！',
-        ]);
+        return redirect('login//')->withErrors(['error'=>'姓名或学号不正确！请重新填写！']);
+
     }
 
     /*
