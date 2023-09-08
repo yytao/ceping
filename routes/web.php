@@ -22,10 +22,7 @@ Route::get('/login', [LoginController::class, "loginView"])->name('loginView');
 Route::post('/login', [LoginController::class, "login"])->name('login');
 Route::get('/logout', [LoginController::class, "logout"])->name('logout');
 
-Route::get('/generate/{school_id}', [IndexController::class, "generate"])->name('generate');
-
 Route::get('/schoolReportPage/{school_id}', [IndexController::class, "schoolReportPage"])->name('schoolReportPage');
-
 
 Route::group(['middleware'=>['auth']], function() {
 
@@ -34,7 +31,5 @@ Route::group(['middleware'=>['auth']], function() {
     Route::post('/exam/getQuestion', [ExaminationController::class, "getQuestion"]);
     Route::post('/exam/result', [ExaminationController::class, "resultSubmit"]);
     Route::post('/exam/resultExtra', [ExaminationController::class, "resultSubmitExtra"]);
-
-
-
+    
 });

@@ -29,8 +29,9 @@ class ExaminationController extends Controller
             return back();
         }
 
-        return view("exam_page", compact(
-            'examination'
+        return view("examination", compact(
+            'examination',
+            'user',
         ));
     }
 
