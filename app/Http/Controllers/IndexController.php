@@ -42,6 +42,7 @@ class IndexController extends Controller
 
         $data = [];
         //学校总人数
+
         $data["totalStudent"] = User::where("school_id", $school_id)->count();
         $data["totalAnswerResult"] = count($answerResult);
         $data["low"] = 0;
@@ -50,7 +51,11 @@ class IndexController extends Controller
         $data["level3"] = 0;
         $data["high"] = 0;
 
+        $examUserIds = [];
+
         foreach ($answerResult as $key=>$resultItem) {
+
+            $examUserIds[] = $resultItem["user_id"];
 
             //注意力测试题，如果有一道题得了0分，即判定无效试卷
             $R = array_filter($resultItem["result"], function($subArray) {
@@ -73,7 +78,7 @@ class IndexController extends Controller
                 return in_array($subArray['modular_id'], $specialModular);
             });
 
-
+            $data["special"][16] = 0;
             //计算A到L模块所有的题，以及每一个模块的的分数
             foreach ($regularModular as $k=>$item){
                 $Y["regular"][$item]["allResult"] = array_filter($regular, function($subArray) use ($item) {
@@ -97,6 +102,11 @@ class IndexController extends Controller
 
                 }else if($Y["regular"][$item]["score"] <= 0.27) {
                     $data["regular"][$item]["low"] += 1;
+                }
+
+                if($data["regular"][$item]["result"] == "P读写障碍") {
+
+                    $data["special"][16] += 1;
 
                 }
 
@@ -117,8 +127,6 @@ class IndexController extends Controller
                 if($score == 1) {
                     $data["special"][$item] += 1;
                 }
-
-
             }
 
             //各模块的总题数
@@ -155,7 +163,23 @@ class IndexController extends Controller
             }
         }
 
+        //有效问卷数目
         $data["validAnswerResult"] = count($answerResult);
+
+
+        //处理常规维度柱状图，每个常规模块的高风险人数
+        foreach ($data["regular"] as $k=>$item)
+        {
+            if($item["result"]->name == "P读写障碍")
+                continue;
+
+            $data["school6"]["value"][] = $item["high"];
+        }
+
+        //查询没有做试卷的用户
+        $data["unExamUser"] = User::whereNotIn("id", $examUserIds)->get()->toArray();
+
+        //dd($data["unExamUser"]);
 
         return view("admin.school_report", compact(
             "examination",

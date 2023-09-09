@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>首页-示例</title>
+    <title>{{ $examination->school->name }}报告</title>
     <meta name="keywords" content="" />
     <meta name="description" content="" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -12,6 +12,24 @@
     <link rel="icon" href="/style/report/favicon.ico" />
     <link href="/style/report/css/common.css" rel="stylesheet" />
     <link href="/style/report/css/school.css" rel="stylesheet" />
+    <script>
+        function editName(str){
+            var replcenem='';
+            //三位姓名的中间变星号
+            if(str.length >= 3){
+                var strSplit=str.split('');
+                var strSplitone = strSplit[0];
+                replcenem = strSplitone+'**';
+                return replcenem
+            }
+            if (str.length == 2){  //两位的姓名，后面以为变星号
+                var strSplit=str.split('');
+                var strSplitone = strSplit[0];
+                replcenem = strSplitone+'*';
+                return replcenem
+            }
+        }
+    </script>
 </head>
 
 <body>
@@ -24,8 +42,8 @@
                     <img src="/style/report/img/bg-school.png" alt="" />
                 </div>
                 <div class="info">
-                    <h2>朱辛庄第一小学</h2>
-                    <h4>2023年6月7日</h4>
+                    <h2>{{ $examination->school->name }}</h2>
+                    <h4>{{ date("Y年m月d日") }}</h4>
                 </div>
             </div>
         </div>
@@ -45,42 +63,39 @@
                     <h1 class="z-title-2">一、报告摘要</h1>
                     <h2 class="z-title-3 mt-30 pt-30">（一）、标题标题</h2>
                     <p class="z-text text-indent">
-                        本次测评针对4539名学生进行测评，收获问卷共有4406，有效问卷为4151。基于心理测量学对测评结果进行分析，学生心理健康风险较低人数为1749，占有效问
+                        本次测评针对{{ $data["totalStudent"] }}名学生进行测评，收获问卷共有{{ $data["totalAnswerResult"] }}，有效问卷为{{ $data["validAnswerResult"] }}。基于心理测量学对测评结果进行分析，学生心理健康风险较低人数为{{ $data["low"] }}，占有效问
                     </p>
                     <div class="z-image">
-                        <div class="echarts-box" id="shool1"></div>
-                        <!-- <img src="./img/image-school1.png" alt="" /> -->
+                        <div class="echarts-box" id="school1"></div>
                     </div>
                 </div>
                 <div class="part">
                     <h2 class="z-title-3">（二）、标题标题</h2>
                     <p class="z-text">
-                        本次测评针对4539名学生进行测评，收获问卷共有4406，有效问卷为4151。基于心理测量学对测评结果进行分析，学生心理健康风险较低人数为1749，占有效问
+                        本次测评针对{{ $data["totalStudent"] }}名学生进行测评，收获问卷共有{{ $data["totalAnswerResult"] }}，有效问卷为{{ $data["validAnswerResult"] }}。基于心理测量学对测评结果进行分析，学生心理健康风险较低人数为{{ $data["low"] }}，占有效问
                     </p>
                     <div class="z-image">
-                        <div class="echarts-box" id="shool2"></div>
-                        <!-- <img src="./img/image-school2.png" alt="" /> -->
+                        <div class="echarts-box" id="school2"></div>
                     </div>
                 </div>
                 <div class="part">
                     <h2 class="z-title-3">（三）、标题标题</h2>
                     <p class="z-text">
-                        本次测评针对4539名学生进行测评，收获问卷共有4406，有效问卷为4151。基于心理测量学对测评结果进行分析，学生心理健康风险较低人数为1749，占有效问
+                        本次测评针对{{ $data["totalStudent"] }}名学生进行测评，收获问卷共有{{ $data["totalAnswerResult"] }}，有效问卷为{{ $data["validAnswerResult"] }}。基于心理测量学对测评结果进行分析，学生心理健康风险较低人数为{{ $data["low"] }}，占有效问
                     </p>
                     <div class="z-image">
-                        <div class="echarts-box" id="shool3"></div>
-                        <!-- <img src="./img/image-school3.png" alt="" /> -->
+                        <div class="echarts-box" id="school3"></div>
                     </div>
                 </div>
                 <div class="part">
                     <h1 class="z-title-2 mb-30">一、测评结果</h1>
                     <p class="z-text">
-                        本次测评针对XXX名学生进行测评，收获问卷共有XXXX，有效问卷为XXX。基于心理测量学对测评结果进行分析，学生心理健康风险较低人数为XXXX，占有效问卷比值为00.00%。（各个群体的详细信息见附录1）
+                        本次测评针对{{ $data["totalStudent"] }}名学生进行测评，收获问卷共有{{ $data["totalAnswerResult"] }}，有效问卷为{{ $data["validAnswerResult"] }}。基于心理测量学对测评结果进行分析，学生心理健康风险较低人数为{{ $data["low"] }}，占有效问卷比值为{{ round($data["low"]/$data["validAnswerResult"], 2) }}%。（各个群体的详细信息见附录1）
                     </p>
                     <div class="z-image">
-                        <div class="echarts-box" id="shool4"></div>
-                        <!-- <img src="./img/image-school4.png" alt="" /> -->
+                        <div class="echarts-box" id="school4"></div>
                     </div>
+
                     <div class="z-image">
                         <h4>表1：不同人群普遍具有危险的前五个维度</h4>
                         <div class="risk_top5">
@@ -138,25 +153,29 @@
                 <div class="part">
                     <h2 class="z-title-2 mb-30">二、常规维度</h2>
                     <p class="z-text text-indent">
-                        在A网瘾方面，793人具有风险；在B社交障碍方面，653人具有风险；在C抑郁方面，558人具有风险；在D压力方面，929人具有风险；在E注意力缺陷方面，363人具有风险；在F学习倦怠方面，837人具有风险；在G睡眠问题方面，447人具有风险；在H越轨行为方面，94人具有风险；在I社交焦虑方面，1075人具有风险；在J社交媒体成瘾方面，571人具有风险；在K暴力方面，659人具有风险；在L冷漠方面，147人具有风险。
+                        @foreach($data["regular"] as $k=>$item)
+                            @if($item["result"]->name == "P读写障碍")
+                                @continue
+                            @endif
+                            在{{ $item["result"]->name }}方面，{{ $item["high"] }}人具有风险；
+                        @endforeach
                     </p>
                     <div class="z-image">
-                        <div class="echarts-box" id="shool6"></div>
-                        <!-- <img src="./img/image-school6.png" alt="" /> -->
+                        <div class="echarts-box" id="school6"></div>
+
                         <h6>注：常规维度的名词解释如附录4。</h6>
                     </div>
                 </div>
                 <div class="part">
                     <h2 class="z-title-2 mb-30">三、特殊维度</h2>
                     <p class="z-text text-indent">
-                        在自杀意念方面，294人具有危险，他们认真考虑过自杀；在自杀计划方面，160人具有危险，他们曾制定过自杀计划；在自杀或自伤行为方面，63人具有危险，他们曾出现自杀或自伤行为。
+                        在自杀意念方面，{{ $data["special"][13] }}人具有危险，他们认真考虑过自杀；在自杀计划方面，{{ $data["special"][14] }}人具有危险，他们曾制定过自杀计划；在自杀或自伤行为方面，{{ $data["special"][15] }}人具有危险，他们曾出现自杀或自伤行为。
                     </p>
                     <p class="z-text text-indent">
-                        在读写障碍方面，75人具有危险，他们在读写方面具有较大可能出现问题。
+                        在读写障碍方面，{{ $data["special"][16] }}人具有危险，他们在读写方面具有较大可能出现问题。
                     </p>
                     <div class="z-image">
-                        <div class="echarts-box" id="shool7"></div>
-                        <!-- <img src="./img/image-school7.png" alt="" /> -->
+                        <div class="echarts-box" id="school7"></div>
                     </div>
                     <div class="z-image">
                         <h4>表2： 特殊维度群体普遍具有危险的前五个维度</h4>
@@ -410,30 +429,21 @@
                                     </tr>
                                     </thead>
                                     <tbody>
+                                    @foreach($data["unExamUser"] as $k=>$item)
                                     <tr>
-                                        <td width="7%">1</td>
-                                        <td width="15%">323342250100</td>
+                                        <td width="7%">{{ $k+1 }}</td>
+                                        <td width="15%">
+                                            <script>document.write(editName('{{ $item["name"] }}'))</script>
+                                        </td>
                                         <td width="8%"></td>
-                                        <td width="10%">孟**</td>
+                                        <td width="10%">
+                                            <script>document.write(editName('{{ $item["name"] }}'))</script>
+                                        </td>
                                         <td width="10%">男</td>
                                         <td width="50%"></td>
                                     </tr>
-                                    <tr>
-                                        <td width="7%">1</td>
-                                        <td width="15%">323342250100</td>
-                                        <td width="8%"></td>
-                                        <td width="10%">孟**</td>
-                                        <td width="10%">男</td>
-                                        <td width="50%"></td>
-                                    </tr>
-                                    <tr>
-                                        <td width="7%">1</td>
-                                        <td width="15%">323342250100</td>
-                                        <td width="8%"></td>
-                                        <td width="10%">孟**</td>
-                                        <td width="10%">男</td>
-                                        <td width="50%"></td>
-                                    </tr>
+                                    @endforeach
+
                                     </tbody>
                                 </table>
                             </div>
@@ -444,22 +454,27 @@
         </div>
     </div>
 </div>
-<script src="./js/echarts-5.4.3.min.js"></script>
-<script src="./js/manifest.js"></script>
-<script src="./js/common.js"></script>
-<script src="./js/school.js"></script>
+
+</body>
+</html>
+
+<script src="/style/report/js/echarts-5.4.3.min.js"></script>
+<script src="/style/report/js/manifest.js"></script>
+<script src="/style/report/js/common.js"></script>
+<script src="/style/report/js/school.js"></script>
 <!-- 引入echarts JQ -->
 
-<script src="http://lib.sinaapp.com/js/jquery/1.10.2/jquery-1.10.2.min.js"></script>
-<script type="text/javascript">
-    // 学生总数
-    studentTotal = 2000
+<script src="/style/login/js/jquery.min.js"></script>
 
+<script type="text/javascript">
+
+    // 学生总数
+    studentTotal = {{ $data["totalStudent"] }}
 
     /* 问卷结果分析 */
     $(document).ready(function () {
         // 指定图标的配置和数据
-        var myChart1 = echarts.init(document.getElementById("shool1"));
+        var myChart1 = echarts.init(document.getElementById("school1"));
         myChart1.setOption({
             color: ["#5470C6", "#91CC75", "#FAC858", "#EE6666", "#73C0DE", "#3BA272", "#FC8452", "#9A60B4", "#EA7DCC"],
             backgroundColor: "#ecf0f5",
@@ -557,7 +572,7 @@
             ],
         });
         /* 考生分析 */
-        var myChart2 = echarts.init(document.getElementById("shool2"));
+        var myChart2 = echarts.init(document.getElementById("school2"));
         myChart2.setOption({
             color: ["#5470c6"],
             backgroundColor: "#ecf0f5",
@@ -601,7 +616,7 @@
             ],
         });
         /* 关键词分析 */
-        var myChart3 = echarts.init(document.getElementById("shool3"));
+        var myChart3 = echarts.init(document.getElementById("school3"));
         myChart3.setOption({
             color: [{
                 type: 'radial',
@@ -745,8 +760,10 @@
                 }
             ]
         });
+
+
         /* 测评结果 */
-        var myChart4 = echarts.init(document.getElementById("shool4"));
+        var myChart4 = echarts.init(document.getElementById("school4"));
         myChart4.setOption({
             backgroundColor: "#ecf0f5",
             color: ["#FF0000", "#FFFF00", "#7030A0", "#0000FF", "#00FF00"],
@@ -769,11 +786,11 @@
                     name: "访问量",
                     type: "pie",
                     data: [
-                        { value: 181, name: "具有风险" },
-                        { value: 431, name: "三级值得关注" },
-                        { value: 895, name: "二级值得关注" },
-                        { value: 895, name: "一级值得关注" },
-                        { value: 1749, name: "风险极低" },
+                        { value: {{ $data["high"] }}, name: "具有风险" },
+                        { value: {{ $data["level3"] }}, name: "三级值得关注" },
+                        { value: {{ $data["level2"] }}, name: "二级值得关注" },
+                        { value: {{ $data["level1"] }}, name: "一级值得关注" },
+                        { value: {{ $data["low"] }}, name: "风险极低" },
                     ],
                     label: {
                         color: "#000",
@@ -794,8 +811,10 @@
             ],
         });
 
+
+
         /* 常规维度 */
-        var myChart6 = echarts.init(document.getElementById("shool6"));
+        var myChart6 = echarts.init(document.getElementById("school6"));
         myChart6.setOption({
             color: ["#5b9bd5"],
             grid: {
@@ -853,7 +872,7 @@
                 {
                     name: "考生分析",
                     type: "bar",
-                    data: [793, 653, 558, 929, 363, 837, 447, 97, 1075, 571, 659, 147],
+                    data: [{{ implode(',', $data["school6"]["value"]) }}],
                     barWidth: 25,
                     label: {
                         normal: {
@@ -874,8 +893,11 @@
                 },
             ],
         });
+
+
+
         /* 特殊维度 */
-        var myChart7 = echarts.init(document.getElementById("shool7"));
+        var myChart7 = echarts.init(document.getElementById("school7"));
         myChart7.setOption({
             xAxis: {
                 data: ["M自杀意念", "M自杀计划", "0自杀或自伤行为", "P读写障碍"],
@@ -903,7 +925,7 @@
                 {
                     name: "考生分析",
                     type: "bar",
-                    data: [294, 160, 63, 75],
+                    data: [{{ $data["special"][13] }}, {{ $data["special"][14] }}, {{ $data["special"][15] }}, {{ $data["special"][16] }}],
                     // showBackground: true,
                     // backgroundStyle: {
                     //   color: "rgba(84, 112, 198)",
@@ -942,6 +964,7 @@
             ],
         });
 
+
         function sum(arr) {
             // 数组求和
             return eval(arr.join("+"));
@@ -957,8 +980,6 @@
     })
 
 </script>
-</body>
-
 <style>
     .echarts-box {
         width: 100%;
@@ -973,4 +994,3 @@
     }
 </style>
 
-</html>
