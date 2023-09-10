@@ -156,7 +156,7 @@ class IndexController extends Controller
             $data["result"]["level2"] = [];
             $data["result"]["level1"] = [];
             $data["result"]["low"] = [];
-            
+
             if($Y["Y"] >= 0.73) {
                 $data["high"] += 1;
                 $data["result"]["high"][$key] = $resultItem;
