@@ -302,56 +302,92 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr class="risk">
-                                        <td width="11%">具体风险</td>
-                                        <td width="4%">1</td>
-                                        <td width="12%">323342250122</td>
-                                        <td width="7%"></td>
-                                        <td width="7%">李**</td>
-                                        <td width="7%">女</td>
-                                        <td width="32%">B社交障碍、A网瘾方面B社交障碍、A网瘾方面</td>
-                                        <td width="20%"></td>
-                                    </tr>
-                                    <tr class="three-level">
-                                        <td width="11%">三级值得关注</td>
-                                        <td width="4%">1</td>
-                                        <td width="12%">323342250122</td>
-                                        <td width="7%"></td>
-                                        <td width="7%">李**</td>
-                                        <td width="7%">女</td>
-                                        <td width="32%">B社交障碍、A网瘾方面B社交障碍、A网瘾方面</td>
-                                        <td width="20%"></td>
-                                    </tr>
-                                    <tr class="two-level">
-                                        <td width="11%">二级值得关注</td>
-                                        <td width="4%">1</td>
-                                        <td width="12%">323342250122</td>
-                                        <td width="7%"></td>
-                                        <td width="7%">李**</td>
-                                        <td width="7%">女</td>
-                                        <td width="32%">B社交障碍、A网瘾方面B社交障碍、A网瘾方面</td>
-                                        <td width="20%"></td>
-                                    </tr>
-                                    <tr class="one-level">
-                                        <td width="11%">一级值得关注</td>
-                                        <td width="4%">1</td>
-                                        <td width="12%">323342250122</td>
-                                        <td width="7%"></td>
-                                        <td width="7%">李**</td>
-                                        <td width="7%">女</td>
-                                        <td width="32%">B社交障碍、A网瘾方面B社交障碍、A网瘾方面</td>
-                                        <td width="20%"></td>
-                                    </tr>
-                                    <tr class="low_risk">
-                                        <td width="11%">风险极低</td>
-                                        <td width="4%">1</td>
-                                        <td width="12%">323342250122</td>
-                                        <td width="7%"></td>
-                                        <td width="7%">李**</td>
-                                        <td width="7%">女</td>
-                                        <td width="32%">B社交障碍、A网瘾方面B社交障碍、A网瘾方面</td>
-                                        <td width="20%"></td>
-                                    </tr>
+                                    @foreach($data["result"]["high"] as $k=>$item)
+                                        <tr class="risk">
+                                            <td width="11%">具体风险</td>
+                                            <td width="4%">{{ $k+1 }}</td>
+                                            <td width="12%">
+                                                {{ $item->user->name }}
+                                            </td>
+                                            <td width="15%">
+                                                {{ $item->user->grade }}
+                                            </td>
+                                            <td width="7%"><script>document.write(editName('{{ $item->user->name }}'))</script></td>
+                                            <td width="7%">男</td>
+                                            <td width="32%"></td>
+                                            <td width="20%"></td>
+                                        </tr>
+                                    @endforeach
+
+                                    @foreach($data["result"]["level3"] as $k=>$item)
+                                        <tr class="three-level">
+                                            <td width="11%">三级值得关注</td>
+                                            <td width="4%">{{ $k+1 }}</td>
+                                            <td width="12%">
+                                                {{ $item->user->name }}
+                                            </td>
+                                            <td width="15%">
+                                                {{ $item->user->grade }}
+                                            </td>
+                                            <td width="7%"><script>document.write(editName('{{ $item->user->name }}'))</script></td>
+                                            <td width="7%">男</td>
+                                            <td width="32%"></td>
+                                            <td width="20%"></td>
+                                        </tr>
+                                    @endforeach
+
+                                    @foreach($data["result"]["level2"] as $k=>$item)
+                                        <tr class="two-level">
+                                            <td width="11%">二级值得关注</td>
+                                            <td width="4%">{{ $k+1 }}</td>
+                                            <td width="12%">
+                                                {{ $item->user->name }}
+                                            </td>
+                                            <td width="15%">
+                                                {{ $item->user->grade }}
+                                            </td>
+                                            <td width="7%"><script>document.write(editName('{{ $item->user->name }}'))</script></td>
+                                            <td width="7%">男</td>
+                                            <td width="32%"></td>
+                                            <td width="20%"></td>
+                                        </tr>
+                                    @endforeach
+
+                                    @foreach($data["result"]["level1"] as $k=>$item)
+                                        <tr class="one-level">
+                                            <td width="11%">一级值得关注</td>
+                                            <td width="4%">{{ $k+1 }}</td>
+                                            <td width="12%">
+                                                {{ $item->user->name }}
+                                            </td>
+                                            <td width="15%">
+                                                {{ $item->user->grade }}
+                                            </td>
+                                            <td width="7%"><script>document.write(editName('{{ $item->user->name }}'))</script></td>
+                                            <td width="7%">男</td>
+                                            <td width="32%"></td>
+                                            <td width="20%"></td>
+                                        </tr>
+                                    @endforeach
+
+
+                                    @foreach($data["result"]["low"] as $k=>$item)
+                                        <tr class="low_risk">
+                                            <td width="11%">风险极低</td>
+                                            <td width="4%">{{ $k+1 }}</td>
+                                            <td width="12%">
+                                                {{ $item->user->name }}
+                                            </td>
+                                            <td width="15%">
+                                                {{ $item->user->grade }}
+                                            </td>
+                                            <td width="7%"><script>document.write(editName('{{ $item->user->name }}'))</script></td>
+                                            <td width="7%">男</td>
+                                            <td width="32%"></td>
+                                            <td width="20%"></td>
+                                        </tr>
+                                    @endforeach
+
                                     </tbody>
                                 </table>
                             </div>
@@ -380,36 +416,25 @@
                                     </tr>
                                     </thead>
                                     <tbody>
+                                    @foreach($data["invalidAnswerResult"] as $k=>$item)
                                     <tr>
-                                        <td width="7%">1</td>
-                                        <td width="15%">323342250122</td>
-                                        <td width="8%"></td>
-                                        <td width="10%">刘兰奇</td>
+                                        <td width="7%">{{ $k+1 }}</td>
+                                        <td width="15%">
+                                            {{ $item->user->name }}
+                                        </td>
+                                        <td width="15%">
+                                            {{ $item->user->grade }}
+                                        </td>
+                                        <td width="10%">
+                                            <script>document.write(editName('{{ $item->user->name }}'))</script>
+                                        </td>
                                         <td width="10%">男</td>
                                         <td width="29%">R1错误，R1错误，R1错误，</td>
                                         <td width="14%">正常</td>
                                         <td width="7%">无效</td>
                                     </tr>
-                                    <tr>
-                                        <td width="7%">1</td>
-                                        <td width="15%">323342250122</td>
-                                        <td width="8%"></td>
-                                        <td width="10%">刘兰奇</td>
-                                        <td width="10%">男</td>
-                                        <td width="29%">R1错误，R1错误，R1错误，</td>
-                                        <td width="14%">正常</td>
-                                        <td width="7%">无效</td>
-                                    </tr>
-                                    <tr>
-                                        <td width="7%">1</td>
-                                        <td width="15%">323342250122</td>
-                                        <td width="8%"></td>
-                                        <td width="10%">刘兰奇</td>
-                                        <td width="10%">男</td>
-                                        <td width="29%">R1错误，R1错误，R1错误，</td>
-                                        <td width="14%">正常</td>
-                                        <td width="7%">无效</td>
-                                    </tr>
+                                    @endforeach
+
                                     </tbody>
                                 </table>
                             </div>
@@ -422,7 +447,7 @@
                                     <tr>
                                         <th width="7%">序号</th>
                                         <th width="15%">登陆账号</th>
-                                        <th width="8%">班级</th>
+                                        <th width="15%">班级</th>
                                         <th width="10%">姓名</th>
                                         <th width="10%">性别</th>
                                         <th width="50%">未参加测评原因（学校填写）</th>
@@ -433,9 +458,11 @@
                                     <tr>
                                         <td width="7%">{{ $k+1 }}</td>
                                         <td width="15%">
-                                            <script>document.write(editName('{{ $item["name"] }}'))</script>
+                                            {{ $item["name"] }}
                                         </td>
-                                        <td width="8%"></td>
+                                        <td width="15%">
+                                            {{ $item["grade"] }}
+                                        </td>
                                         <td width="10%">
                                             <script>document.write(editName('{{ $item["name"] }}'))</script>
                                         </td>

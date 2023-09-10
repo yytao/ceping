@@ -29,4 +29,8 @@ class ExaminationResults extends Model
         return $this->hasOne(School::class, 'id', 'school_id');
     }
 
+    public function user()
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
 }

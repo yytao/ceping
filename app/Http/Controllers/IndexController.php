@@ -35,7 +35,7 @@ class IndexController extends Controller
 
         $answerResult = ExaminationResults::where("school_id", $school_id)
             ->where("examination_id", $examination->id)
-            ->get()->toArray();
+            ->get();
         if(empty($answerResult)) {
             //return "";
         }
@@ -62,7 +62,8 @@ class IndexController extends Controller
                 return $subArray['modular_id'] == 18 && $subArray['score'] == 0;
             });
             if($R) {
-                //$data["invalidAnswerResult"][] = $answerResult[$k];
+                $data["invalidAnswerResult"][] = $answerResult[$key];
+
                 //unset($answerResult[$k]);
                 //continue;
             }
@@ -79,6 +80,9 @@ class IndexController extends Controller
             });
 
             $data["special"][16] = 0;
+            $highRegular = [];
+            $highSpecial = [];
+
             //计算A到L模块所有的题，以及每一个模块的的分数
             foreach ($regularModular as $k=>$item){
                 $Y["regular"][$item]["allResult"] = array_filter($regular, function($subArray) use ($item) {
@@ -95,7 +99,15 @@ class IndexController extends Controller
                 $data["regular"][$item]["result"] = Modular::find($item);
 
                 if($Y["regular"][$item]["score"] >= 0.73) {
+
+                    if($data["regular"][$item]["result"]->name == "P读写障碍") {
+                        $data["special"][16] += 1;
+                        $highSpecial[$item] = $Y["regular"][$item]["score"];
+                        continue;
+                    }
+
                     $data["regular"][$item]["high"] += 1;
+                    $highRegular[$item] = $Y["regular"][$item]["score"];
 
                 }else if($Y["regular"][$item]["score"] > 0.27 && $Y["regular"][$item]["score"] < 0.73) {
                     $data["regular"][$item]["mid"] += 1;
@@ -104,13 +116,9 @@ class IndexController extends Controller
                     $data["regular"][$item]["low"] += 1;
                 }
 
-                if($data["regular"][$item]["result"] == "P读写障碍") {
-
-                    $data["special"][16] += 1;
-
-                }
-
             }
+
+            $answerResult[$key]->highRegular = $highRegular;
 
             //计算每个特殊模块题的分数
             foreach ($specialModular as $k=>$item){
@@ -126,8 +134,11 @@ class IndexController extends Controller
 
                 if($score == 1) {
                     $data["special"][$item] += 1;
+                    $highSpecial[$item] = $score;
                 }
             }
+
+            $answerResult[$key]->highSpecial = $highSpecial;
 
             //各模块的总题数
             $N = array_sum(array_map(function ($item){
@@ -140,6 +151,12 @@ class IndexController extends Controller
 
             $Y["Y"] = round($ni / $N, 4);
 
+            $data["result"]["high"] = [];
+            $data["result"]["level3"] = [];
+            $data["result"]["level2"] = [];
+            $data["result"]["level1"] = [];
+            $data["result"]["low"] = [];
+            
             if($Y["Y"] >= 0.73) {
                 $data["high"] += 1;
                 $data["result"]["high"][$key] = $resultItem;
@@ -161,11 +178,11 @@ class IndexController extends Controller
                 $data["result"]["low"][$key] = $resultItem;
 
             }
+
         }
 
         //有效问卷数目
         $data["validAnswerResult"] = count($answerResult);
-
 
         //处理常规维度柱状图，每个常规模块的高风险人数
         foreach ($data["regular"] as $k=>$item)
@@ -179,7 +196,7 @@ class IndexController extends Controller
         //查询没有做试卷的用户
         $data["unExamUser"] = User::whereNotIn("id", $examUserIds)->get()->toArray();
 
-        //dd($data["unExamUser"]);
+//        dd($data);
 
         return view("admin.school_report", compact(
             "examination",
