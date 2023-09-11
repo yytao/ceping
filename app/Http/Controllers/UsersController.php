@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Examination;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class UsersController extends Controller
 {
@@ -26,6 +27,8 @@ class UsersController extends Controller
             return redirect("/exam/$examination->id");
 
         } else {
+            Auth::logout();
+            Session::flush();
             echo "错误，未指定试卷";
             die;
         }
