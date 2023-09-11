@@ -42,6 +42,10 @@ class LoginController extends Controller
             $user = Auth::user();
 
             $examination = Examination::where("school_id", $user->school_id)->first();
+            if(empty($examination) && $examination->id) {
+                return redirect('login//')->withErrors(['error'=>'错误，未指定试卷！']);
+            }
+
             $isTest = ExaminationResults::where('examination_id', $examination->id)
                 ->where('user_id', $user->id)
                 ->first();
