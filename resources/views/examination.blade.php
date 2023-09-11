@@ -197,6 +197,7 @@
                 $("#select_box").html("<div class='select_item submitBtn'>提交</div>")
             }else{
                 $("#select_item"+current).addClass("active")
+                document.getElementById("select_item"+current).scrollIntoView()
                 current++
                 nextQuestion()
             }
