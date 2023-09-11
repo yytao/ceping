@@ -42,7 +42,7 @@ class LoginController extends Controller
             $user = Auth::user();
 
             $examination = Examination::where("school_id", $user->school_id)->first();
-            if(empty($examination) && $examination->id) {
+            if(empty($examination)) {
                 Auth::logout();
                 Session::flush();
                 return redirect('login//')->withErrors(['error'=>'错误，未指定试卷！']);
