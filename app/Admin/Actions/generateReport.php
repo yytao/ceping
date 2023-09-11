@@ -3,6 +3,7 @@
 namespace App\Admin\Actions;
 
 use App\Models\Examination;
+use App\Models\School;
 use Encore\Admin\Actions\RowAction;
 use Encore\Admin\Admin;
 use Illuminate\Database\Eloquent\Model;
@@ -22,13 +23,15 @@ class generateReport extends RowAction
         $snappy = App::make('snappy.pdf');
         $snappy->setTimeout(200);
 
+        $school = School::find($examination->school_id);
+
         // 从 HTML 字符串生成 PDF
         //$html = '<h1>dongxuemin</h1>';
         //$snappy->generateFromHtml($html, '/storage/app/report/report'.$examination->school_id.'.pdf');
         ini_set('max_execution_time','300');
         $snappy->generate(config('app.url')."/schoolReportPage/".$examination->school_id, storage_path('/app/public/').'report/report'.$examination->school_id.'.pdf');
 
-        $examination->report_file = '/report/report'.$examination->school_id.'.pdf';
+        $examination->report_file = '/report/'.$school->name.'.pdf';
         $examination->save();
 
         return $this->response()->success('报告已生成！')->refresh();
