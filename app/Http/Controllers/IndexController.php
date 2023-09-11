@@ -184,6 +184,7 @@ class IndexController extends Controller
         //有效问卷数目
         $data["validAnswerResult"] = count($answerResult);
 
+        dd($data);
         //处理常规维度柱状图，每个常规模块的高风险人数
         foreach ($data["regular"] as $k=>$item)
         {

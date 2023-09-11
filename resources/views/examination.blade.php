@@ -225,7 +225,7 @@
                 if(type == 'A') {
                     type = 'B'
                 } else {
-                    $("#select_box").html("<div class='btn submitBtnExtra'>提交</div>")
+                    $("#select_box").html("<div class='select_item submitBtnExtra'>提交</div>")
                     return;
                 }
             }
