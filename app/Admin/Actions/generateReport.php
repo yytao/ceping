@@ -29,7 +29,7 @@ class generateReport extends RowAction
         //$html = '<h1>dongxuemin</h1>';
         //$snappy->generateFromHtml($html, '/storage/app/report/report'.$examination->school_id.'.pdf');
         ini_set('max_execution_time','300');
-        $snappy->generate(config('app.url')."/schoolReportPage/".$examination->school_id, storage_path('/app/public/').'report/report'.$examination->school_id.'.pdf');
+        $snappy->generate(config('app.url')."/schoolReportPage/".$examination->school_id, storage_path('/app/public/').'report/'.$school->name.'.pdf');
 
         $examination->report_file = '/report/'.$school->name.'.pdf';
         $examination->save();
