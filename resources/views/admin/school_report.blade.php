@@ -282,8 +282,16 @@
                                             </td>
                                             <td width="7%"><script>document.write(editName('{{ $item->user->name }}'))</script></td>
                                             <td width="7%">{{ $item->user->gender }}</td>
-                                            <td width="32%"></td>
-                                            <td width="20%"></td>
+                                            <td width="32%">
+                                                @foreach($item->userRegular as $k=>$v)
+                                                    {{ config("customParams.modular")[$v]."，" }}
+                                                @endforeach
+                                            </td>
+                                            <td width="20%">
+                                                @foreach($item->userSpecial as $k=>$v)
+                                                    {{ config("customParams.modular")[$v]."，" }}
+                                                @endforeach
+                                            </td>
                                         </tr>
                                     @endforeach
 
@@ -299,8 +307,16 @@
                                             </td>
                                             <td width="7%"><script>document.write(editName('{{ $item->user->name }}'))</script></td>
                                             <td width="7%">{{ $item->user->gender }}</td>
-                                            <td width="32%"></td>
-                                            <td width="20%"></td>
+                                            <td width="32%">
+                                                @foreach($item->userRegular as $k=>$v)
+                                                    {{ config("customParams.modular")[$v]."，" }}
+                                                @endforeach
+                                            </td>
+                                            <td width="20%">
+                                                @foreach($item->userSpecial as $k=>$v)
+                                                    {{ config("customParams.modular")[$v]."，" }}
+                                                @endforeach
+                                            </td>
                                         </tr>
                                     @endforeach
 
@@ -316,8 +332,16 @@
                                             </td>
                                             <td width="7%"><script>document.write(editName('{{ $item->user->name }}'))</script></td>
                                             <td width="7%">{{ $item->user->gender }}</td>
-                                            <td width="32%"></td>
-                                            <td width="20%"></td>
+                                            <td width="32%">
+                                                @foreach($item->userRegular as $k=>$v)
+                                                    {{ config("customParams.modular")[$v]."，" }}
+                                                @endforeach
+                                            </td>
+                                            <td width="20%">
+                                                @foreach($item->userSpecial as $k=>$v)
+                                                    {{ config("customParams.modular")[$v]."，" }}
+                                                @endforeach
+                                            </td>
                                         </tr>
                                     @endforeach
 
@@ -333,8 +357,16 @@
                                             </td>
                                             <td width="7%"><script>document.write(editName('{{ $item->user->name }}'))</script></td>
                                             <td width="7%">{{ $item->user->gender }}</td>
-                                            <td width="32%"></td>
-                                            <td width="20%"></td>
+                                            <td width="32%">
+                                                @foreach($item->userRegular as $k=>$v)
+                                                    {{ config("customParams.modular")[$v]."，" }}
+                                                @endforeach
+                                            </td>
+                                            <td width="20%">
+                                                @foreach($item->userSpecial as $k=>$v)
+                                                    {{ config("customParams.modular")[$v]."，" }}
+                                                @endforeach
+                                            </td>
                                         </tr>
                                     @endforeach
 
@@ -351,8 +383,16 @@
                                             </td>
                                             <td width="7%"><script>document.write(editName('{{ $item->user->name }}'))</script></td>
                                             <td width="7%">{{ $item->user->gender }}</td>
-                                            <td width="32%"></td>
-                                            <td width="20%"></td>
+                                            <td width="32%">
+                                                @foreach($item->userRegular as $k=>$v)
+                                                    {{ config("customParams.modular")[$v]."，" }}
+                                                @endforeach
+                                            </td>
+                                            <td width="20%">
+                                                @foreach($item->userSpecial as $k=>$v)
+                                                    {{ config("customParams.modular")[$v]."，" }}
+                                                @endforeach
+                                            </td>
                                         </tr>
                                     @endforeach
 

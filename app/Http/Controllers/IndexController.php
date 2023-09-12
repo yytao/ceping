@@ -164,6 +164,8 @@ class IndexController extends Controller
                     @$data["special"][$item] += 1;
                     $highSpecial[$item] = $highRegular;
 
+                    @$userSpecial[] = $item;
+
                     $data["highSpecial"][$item] = array_merge($data["highSpecial"][$item], $highRegular);
 
                 }
@@ -180,11 +182,12 @@ class IndexController extends Controller
 
             $Y["Y"] = round($ni / $N, 4);
 
+            $answerResult[$key]->userRegular = $highRegular??[];
+            $answerResult[$key]->userSpecial = $userSpecial??[];
 
             if($Y["Y"] >= 0.73) {
                 $data["high"] += 1;
                 $data["result"]["high"][$key] = $resultItem;
-
                 $data["highRegular"] = array_merge($data["highRegular"], $highRegular);
 
             }else if($Y["Y"] > 0.5968 && $Y["Y"] < 0.73) {
@@ -212,8 +215,6 @@ class IndexController extends Controller
                 $data["lowRegular"] = array_merge($data["highRegular"], $highRegular);
             }
         }
-
-
 
         //处理结果然后排序只取前5个
         $data["highRegular"] = array_count_values($data["highRegular"]);
@@ -263,8 +264,6 @@ class IndexController extends Controller
 
         //查询没有做试卷的用户
         $data["unExamUser"] = User::where("school_id", $school_id)->whereNotIn("id", $examUserIds)->get()->toArray();
-
-//        dd($data);
 
         return view("admin.school_report", compact(
             "examination",
