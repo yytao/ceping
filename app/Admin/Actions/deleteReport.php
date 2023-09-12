@@ -6,7 +6,7 @@ use App\Models\Examination;
 use Encore\Admin\Actions\RowAction;
 use Encore\Admin\Admin;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class deleteReport extends RowAction
 {
@@ -20,7 +20,8 @@ class deleteReport extends RowAction
             return $this->response()->success('未生成报告！')->refresh();
         }
 
-        Storage::delete(storage_path('/app/public').$examination->report_file);
+        $del = File::delete(public_path('/storage/').$examination->report_file);
+
         $examination->report_file = null;
         $examination->save();
 
