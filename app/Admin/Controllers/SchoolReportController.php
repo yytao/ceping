@@ -3,15 +3,13 @@
 namespace App\Admin\Controllers;
 
 use App\Admin\Actions\generateReport;
+use App\Admin\Actions\deleteReport;
+use App\Admin\Actions\webReport;
 use App\Models\Examination;
-use App\Models\ExaminationResults;
-use App\Models\Modular;
 use App\Models\Question;
-use App\Models\User;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
-use Illuminate\Http\Request;
 
 class SchoolReportController extends AdminController
 {
@@ -43,6 +41,8 @@ class SchoolReportController extends AdminController
             $actions->disableEdit();
             $actions->disableDelete();
             $actions->add(new generateReport());
+            $actions->add(new webReport());
+            $actions->add(new deleteReport());
         });
 
         $grid->column('id', __('ID'))->sortable()->width(100);
