@@ -22,7 +22,7 @@
 
     <meta name="csrf-token" content="<?= csrf_token() ?>">
 
-    <title>登录 - 中小学生心理评估管理平台</title>
+    <title>登录 - 学生心理评估管理平台</title>
     <style>
         * {
             margin: 0;
@@ -314,7 +314,7 @@
         <div class="login-wrapper">
             <div class="header">
                 <div class="head_name">
-                    中小学生心理评估管理平台
+                    学生心理评估管理平台
                 </div>
             </div>
             <div class="form-wrapper">

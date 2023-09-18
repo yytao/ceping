@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>登录 - 中小学生心理评估管理平台</title>
+    <title>登录 - 学生心理评估管理平台</title>
     <link rel="stylesheet" type="text/css" href="/style/login/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/style/login/css/fontawesome-all.min.css">
     <link rel="stylesheet" type="text/css" href="/style/login/css/iofrm-style.css">
@@ -24,8 +24,8 @@
         <div class="form-holder">
             <div class="form-content">
                 <div class="form-items">
-                    <h3>中小学生综合成长管理平台</h3>
-                    <p>欢迎光临中小学生综合成长管理平台，在这里您可以开启心灵旅程.</p>
+                    <h3>学生综合成长管理平台</h3>
+                    <p>欢迎光临学生综合成长管理平台，在这里您可以开启心灵旅程.</p>
                     <form action="/login" method="post">
 
                         @error("error")

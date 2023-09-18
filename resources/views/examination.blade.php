@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $examination->name }} - 中小学生心理评估管理平台</title>
+    <title>{{ $examination->name }} - 学生心理评估管理平台</title>
     <link rel="stylesheet" href="/style/web_exam/css/index.css">
     <link rel="stylesheet" href="/style/web_exam/css/common.css">
     <meta name="csrf-token" content="<?= csrf_token() ?>">
