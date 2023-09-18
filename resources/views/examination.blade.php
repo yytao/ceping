@@ -14,7 +14,7 @@
 <body>
 <div class="content">
     <div class="contetn_box">
-        <div class="content_name">中小学生综合成长管理平台</div>
+        <div class="content_name">学生综合成长管理平台</div>
         <div class="content_info">
             <div class="info_title">{{ $examination->name }}</div>
             <div class="info_box">
@@ -52,7 +52,7 @@
             </div>
         </div>
         <div class="company_info">技术支持：<span>海南心智智能信息咨询有限公司</span></div>
-        <div class="company_mobile">联系电话：<span>12345678910</span></div>
+        <div class="company_mobile">联系电话：<span>13601116871</span></div>
     </div>
 
 </div>

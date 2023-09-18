@@ -24,6 +24,35 @@ class IndexController extends Controller
 
 
     /*
+     * 导入测试用户
+     */
+    public function insertUser()
+    {
+        $i = 1;
+
+        return false;
+        for(; $i <= 150; $i++)
+        {
+            $user = new User();
+            $user->name = "jxws".str_pad($i, 2, '0', STR_PAD_LEFT);
+
+            $user->gender = "男";
+            $user->password = "$2y$10$7zn6S4xKGRY.sXZw4OIdROQjGmRCYwVnT0iG/tl6vBvbOqVTcd4ly";
+            $user->school_id = 6;
+
+            $user->id_card = 11;
+            $user->year = 2023;
+            $user->grade = "一年级";
+            $user->class = 1;
+            $user->student_id = "123";
+            $user->student_code = "123";
+            $user->save();
+        }
+
+    }
+
+
+    /*
      * 显示报告的html页，用来生成pdf
      * 处理数据
      */

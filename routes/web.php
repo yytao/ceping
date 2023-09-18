@@ -18,6 +18,10 @@ use App\Http\Controllers\ExaminationController;
 
 Route::get('/', [IndexController::class, "index"]);
 
+//导入测试用户
+Route::get('/insertUser', [IndexController::class, "insertUser"]);
+
+
 Route::get('/login', [LoginController::class, "loginView"])->name('loginView');
 Route::post('/login', [LoginController::class, "login"])->name('login');
 Route::get('/logout', [LoginController::class, "logout"])->name('logout');
@@ -31,5 +35,5 @@ Route::group(['middleware'=>['auth']], function() {
     Route::post('/exam/getQuestion', [ExaminationController::class, "getQuestion"]);
     Route::post('/exam/result', [ExaminationController::class, "resultSubmit"]);
     Route::post('/exam/resultExtra', [ExaminationController::class, "resultSubmitExtra"]);
-    
+
 });
