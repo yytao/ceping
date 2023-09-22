@@ -97,7 +97,7 @@ class IndexController extends Controller
         $data["lowRegular"] = [];
         $data["highSpecial"] = [13=>[], 14=>[], 15=>[]];
         $data["regular"] = [];
-
+        $data["invalidAnswerResult"] = [];
         foreach ($answerResult as $key=>$resultItem) {
 
             $examUserIds[] = $resultItem["user_id"];
