@@ -39,6 +39,9 @@ Route::group([
 
     //学校评估报告
     $router->resource('schoolReport', SchoolReportController::class);
+    
+    //学校评估报告
+    $router->resource('studentReport', StudentReportController::class);
 
     //题库管理
     $router->resource('question', QuestionController::class);
@@ -46,9 +49,6 @@ Route::group([
     //模块管理
     $router->resource('modular', ModularController::class);
 
-
-    //模块管理
-    $router->get('schoolReportPage/{school_id}', 'SchoolReportController@schoolReportPage');
 
 
 });

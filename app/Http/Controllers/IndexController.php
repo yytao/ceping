@@ -301,4 +301,137 @@ class IndexController extends Controller
         ));
     }
 
+
+
+    
+    /*
+     * 显示报告的html页，用来生成pdf Student
+     * 处理数据
+     */
+    public function studentReportPage(Request $request, $user_id)
+    {
+        $user = User::find($user_id);
+        if(empty($user)) {
+            return "";
+        }
+
+        $answerResult = ExaminationResults::where("user_id", $user->id)->first();
+        if(empty($answerResult)) {
+            return "";
+        }
+
+        $data = [];
+
+        $regularModular = [1,2,3,4,5,6,7,8,9,10,11,12,16];
+        $specialModular = [13,14,15];
+
+        $regular = array_filter($answerResult["result"], function($subArray) use ($regularModular) {
+            return in_array($subArray['modular_id'], $regularModular);
+        });
+
+        $special = array_filter($answerResult["result"], function($subArray) use ($specialModular) {
+            return in_array($subArray['modular_id'], $specialModular);
+        });
+
+        $highRegular = [];
+        $highSpecial = [];
+
+        //计算A到L模块所有的题，以及每一个模块的的分数
+        foreach ($regularModular as $k=>$item){
+            $Y["regular"][$item]["allResult"] = array_filter($regular, function($subArray) use ($item) {
+                return $subArray['modular_id'] == $item;
+            });
+
+            $Y["regular"][$item]["sumScore"] = $score = array_sum(array_column($Y["regular"][$item]["allResult"], "score"));
+
+            $Y["regular"][$item]["score"] = @round($score / count($Y["regular"][$item]["allResult"]), 4);
+
+            if($item == 16 && $Y["regular"][$item]["sumScore"] == 0)
+            {
+                continue;
+            }
+
+            $data["regular"][$item]["result"] = $modular = Modular::find($item);
+
+            if($Y["regular"][$item]["score"] >= 0.73) {
+                $msg = array_filter($modular["level"], function($subArray) use ($item) {
+                    return $subArray['level'] == "high";
+                });
+                @$data["regular"][$item]["msg"] = array_column($msg, 'msg')[0]??"无";
+                @$data["regular"][$item]["title"] = "风险极高";
+
+
+            }else if($Y["regular"][$item]["score"] > 0.27 && $Y["regular"][$item]["score"] < 0.73) {
+                $msg = array_filter($modular["level"], function($subArray) use ($item) {
+                    return $subArray['level'] == "mid";
+                });
+                @$data["regular"][$item]["msg"] = array_column($msg, 'msg')[0]??"无";
+                @$data["regular"][$item]["title"] = "值得关注（建议持续跟进并进一步评估）";
+
+            }else if($Y["regular"][$item]["score"] <= 0.27) {
+                $msg = array_filter($modular["level"], function($subArray) use ($item) {
+                    return $subArray['level'] == "low";
+                });
+                @$data["regular"][$item]["msg"] = array_column($msg, 'msg')[0]??"无";
+                @$data["regular"][$item]["title"] = "风险极低";
+                
+            }
+        }
+
+        $data["special"] = 0;
+        //计算每个特殊模块题的分数
+        foreach ($specialModular as $k=>$item){
+            $Y["special"][$item]["allResult"] = array_filter($special, function($subArray) use ($item) {
+                return $subArray['modular_id'] == $item;
+            });
+
+            $score = array_sum(array_column($Y["special"][$item]["allResult"], "score"));
+
+            $Y["special"][$item]["score"] = $score;
+
+            if($score == 1) {
+                $data["special"] = $item;
+                $data["special_title"] = config("customParams.special_title")[$item];
+            }
+        }
+
+        /*
+            计算Y
+        */
+        //各模块的总题数
+        $N = array_sum(array_map(function ($item){
+            return count($item["allResult"]);
+        }, $Y["regular"]));
+        //各模块的的分数
+        $ni = array_sum(array_column($Y["regular"],"sumScore"));
+        $data["Y"] = $Y["Y"] = round($ni / $N, 4) * 100;
+        if($Y["Y"] >= 0.73) {
+            $data["Y_title"] = "风险极高";
+            $data["Y_msg"] = "风险极高的提示语，需要提供给我";
+
+        }else if($Y["Y"] > 0.5968 && $Y["Y"] < 0.73) {
+            $data["Y_title"] = "三级关注";
+            $data["Y_msg"] = "三级关注的提示语，需要提供给我";
+
+        }else if($Y["Y"] > 0.4032 && $Y["Y"] <= 0.5968) {
+            $data["Y_title"] = "二级关注";
+            $data["Y_msg"] = "二级关注的提示语，需要提供给我";
+
+        }else if($Y["Y"] > 0.27 && $Y["Y"] <= 0.4032) {
+            $data["Y_title"] = "一级关注";
+            $data["Y_msg"] = "一级关注的提示语，需要提供给我";
+
+        }else if($Y["Y"] <= 0.27) {
+            $data["Y_title"] = "风险极低";
+            $data["Y_msg"] = "总体而言，该生整体得分处于正常人群的平均分布范围之内，意味着未来校园生活中，该生在心理健康方面出现问题的可能性极低，无需过度关注。";
+        }
+        
+        // dd($data);
+
+        return view("admin.student_report", compact(
+            "user",
+            "data",
+        ));
+    }
+
 }

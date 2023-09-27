@@ -27,6 +27,7 @@ Route::post('/login', [LoginController::class, "login"])->name('login');
 Route::get('/logout', [LoginController::class, "logout"])->name('logout');
 
 Route::get('/schoolReportPage/{school_id}', [IndexController::class, "schoolReportPage"])->name('schoolReportPage');
+Route::get('/studentReportPage/{user_id}', [IndexController::class, "studentReportPage"])->name('studentReportPage');
 
 Route::group(['middleware'=>['auth']], function() {
 
