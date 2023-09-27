@@ -131,6 +131,7 @@
             var qkgsmyChart = echarts.init(qkgschartDom);
             var qkgsoption;
             qkgsoption = {
+                animation:false,
                 title: {
                     text: '{{ $data["Y"] }}%',
                     subtext: "{{ @$data["Y_title"] }}",
