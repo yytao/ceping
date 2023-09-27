@@ -27,7 +27,11 @@ class generateStudentReport extends RowAction
         $snappy->setOption("javascript-delay", 50000);
 
         ini_set('max_execution_time','300');
-        $snappy->generate(config('app.url')."/studentReportPage/".$user->id, storage_path('/app/public/').'report/studentReport'.$user->id.'.pdf');
+
+        $html = file_get_contents(config('app.url')."/studentReportPage/".$user->id);
+        $snappy->generateFromHtml($html, storage_path('/app/public/').'report/studentReport'.$user->id.'.pdf');
+        
+        //$snappy->generate(config('app.url')."/studentReportPage/".$user->id, storage_path('/app/public/').'report/studentReport'.$user->id.'.pdf');
 
         $user->report_file = '/report/studentReport'.$user->id.'.pdf';
         $user->save();
