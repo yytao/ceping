@@ -32,7 +32,7 @@ class generateStudentReport extends RowAction
 
         $user->report_file = '/report/studentReport'.$user->id.'.pdf';
         $user->save();
-7nxx>0hAO
+
         return $this->response()->success('报告已生成！')->refresh();
     }
 
