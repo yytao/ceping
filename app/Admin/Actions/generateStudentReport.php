@@ -20,7 +20,7 @@ class generateStudentReport extends RowAction
             return $this->response()->success('报告已生成！')->refresh();
         }
 
-        $snappy = App::make('snappy.image');
+        $snappy = App::make('snappy.pdf');
         $snappy->setTimeout(200);
         $snappy->setOption("encoding", "utf-8");
         $snappy->setOption("encoding", "utf-8");
@@ -28,11 +28,11 @@ class generateStudentReport extends RowAction
 
         ini_set('max_execution_time','300');
 
-        $snappy->generate(config('app.url')."/studentReportPage/".$user->id, storage_path('/app/public/').'report/studentReport'.$user->id.'.jpg');
+        $snappy->generate(config('app.url')."/studentReportPage/".$user->id, storage_path('/app/public/').'report/studentReport'.$user->id.'.pdf');
 
-        $user->report_file = '/report/studentReport'.$user->id.'.jpg';
+        $user->report_file = '/report/studentReport'.$user->id.'.pdf';
         $user->save();
-
+7nxx>0hAO
         return $this->response()->success('报告已生成！')->refresh();
     }
 
