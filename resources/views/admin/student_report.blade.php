@@ -47,6 +47,9 @@
                     color: '#359246',
                 },
                 series: [{
+
+                    enableMouseTracking: false, shadow: false, animation: false,
+
                     type: 'pie',
                     radius: ['85%', '100%'],
                     emphasis: {
@@ -134,10 +137,9 @@
                     <!--分块内容-->
                     <div class="part">
                         <h2 class="z-title-3">情况概述</h2>
-                        <div class="z-image">
+                        <div class="z-image" style="width:800px;height:360px;">
                             <!-- <img style="width: 360px;" src="./img/image1.png" alt=""> -->
-                            <div id="over-view"></div>
-
+                            <div id="over-view" style="width:360px;height:360px;"></div>
                         </div>
                         <p class="z-text">{{ @$data["Y_msg"] }}</p>
                         <p class="z-text-danger">注：百分比越高，出现心理问题的几率会越高，更需关注</p>
