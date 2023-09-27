@@ -24,7 +24,7 @@ class generateStudentReport extends RowAction
         $snappy->setTimeout(200);
         $snappy->setOption("encoding", "utf-8");
         $snappy->setOption("encoding", "utf-8");
-        $snappy->setOption("javascript-delay", 10000);
+        $snappy->setOption("javascript-delay", 50000);
 
         ini_set('max_execution_time','300');
         $snappy->generate(config('app.url')."/studentReportPage/".$user->id, storage_path('/app/public/').'report/studentReport'.$user->id.'.pdf');
