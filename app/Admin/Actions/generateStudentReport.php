@@ -20,7 +20,7 @@ class generateStudentReport extends RowAction
             return $this->response()->success('报告已生成！')->refresh();
         }
 
-        $snappy = App::make('snappy.jpg');
+        $snappy = App::make('snappy.image');
         $snappy->setTimeout(200);
         $snappy->setOption("encoding", "utf-8");
         $snappy->setOption("encoding", "utf-8");
