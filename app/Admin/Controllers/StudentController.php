@@ -2,8 +2,10 @@
 
 namespace App\Admin\Controllers;
 
+use App\Admin\Actions\ImportStudent;
 use App\Models\School;
 use App\Models\User;
+use Encore\Admin\Actions\Action;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -25,7 +27,13 @@ class StudentController extends AdminController
      */
     protected function grid()
     {
+
         $grid = new Grid(new User());
+
+        $grid->tools(function (Grid\Tools $tools) {
+            // excle 导入
+            $tools->append(new ImportStudent());
+        });
 
         $grid->filter(function ($filter) {
             $filter->like('school.name', "学校");

@@ -28,7 +28,7 @@ class LoginController extends Controller
      */
     public function login(Request $request)
     {
-        $credentials = $request->only('name', 'password');
+        $credentials = $request->only('name', 'password', 'student_id');
 
         if(!captcha_check($request->input("captcha"))) {
 
