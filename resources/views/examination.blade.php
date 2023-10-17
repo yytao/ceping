@@ -51,8 +51,8 @@
                 </div>
             </div>
         </div>
-        <div class="company_info">技术支持：<span>海南心智智能信息咨询有限公司</span></div>
-        <div class="company_mobile">联系电话：<span>13601116871</span></div>
+{{--        <div class="company_info">技术支持：<span>海南心智智能信息咨询有限公司</span></div>--}}
+{{--        <div class="company_mobile">联系电话：<span>13601116871</span></div>--}}
     </div>
 
 </div>

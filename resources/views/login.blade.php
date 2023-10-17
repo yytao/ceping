@@ -55,9 +55,9 @@
                     <div class="other-links">
 
                     </div>
-                    <div class="page-links">
-                        <a href="javascript:void(0)" >技术支持：海南心智智能信息咨询有限公司</a>
-                    </div>
+{{--                    <div class="page-links">--}}
+{{--                        <a href="javascript:void(0)" >技术支持：海南心智智能信息咨询有限公司</a>--}}
+{{--                    </div>--}}
                 </div>
             </div>
         </div>
