@@ -40,7 +40,7 @@
 
                         @csrf
                         <input class="form-control" type="text" name="name" placeholder="姓名" required>
-                        <input class="form-control" type="password" name="password" placeholder="密码" required>
+                        <input class="form-control" type="text" name="password" placeholder="学号" required>
                         <input class="form-control" type="text" name="captcha" placeholder="验证码" required>
 
                         <div class="main_bar" leftmargin="0">
