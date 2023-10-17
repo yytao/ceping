@@ -31,7 +31,7 @@
                         </div> -->
                         <div class="user_name">{{ $user->name }}</div>
                         <div class="user_code">学号: <span>{{ $user->student_code }}</span></div>
-                        <div class="from_class">{{ $user->grade }}{{ $user->class }}班</div>
+                        <div class="from_class">{{ $user->grade }}年级{{ $user->class }}班</div>
                     </div>
                     <div class="massage_select" id="massage_select">
                         <!-- 此处填充的是问题的序号 -->

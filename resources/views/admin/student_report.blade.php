@@ -32,7 +32,7 @@
                     </div>
                     <div class="info">
                         <h2>{{ $user->name }}</h2>
-                        <h3>{{ $user->school->name }}（{{ $user->grade }}{{ $user->class }}班）</h3>
+                        <h3>{{ $user->school->name }}（{{ $user->grade }}年级{{ $user->class }}班）</h3>
                         <h4>{{ date("Y年m月d日") }}</h4>
                     </div>
                 </div>
@@ -54,7 +54,7 @@
                             <p><span>姓名</span><span>{{ $user->name }}</span></p>
                             <p><span>性别</span><span>{{ $user->gender }}</span></p>
                             <p><span>学校</span><span>{{ $user->school->name }}</span></p>
-                            <p><span>班级</span><span>{{ $user->grade }}{{ $user->class }}</span></p>
+                            <p><span>班级</span><span>{{ $user->grade }}年级{{ $user->class }}班</span></p>
                         </div>
                         <div class="student-state">
                             <p class="mb-25">声明：</p>
@@ -88,10 +88,10 @@
                             @endif
                         </p>
                     </div>
-                    
+
                     <!--消极方面-->
                     <div class="part">
-                        
+
                         <div class="fulu">
                             <h4>附录4：常规维度与特殊维度的名词解释</h4>
                             @foreach($data["regular"] as $k=>$item)

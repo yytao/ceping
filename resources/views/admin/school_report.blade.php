@@ -278,7 +278,7 @@
                                                 {{ $item->user->name }}
                                             </td>
                                             <td width="15%">
-                                                {{ $item->user->grade }}
+                                                {{ $item->user->grade }}年级
                                             </td>
                                             <td width="7%"><script>document.write(editName('{{ $item->user->name }}'))</script></td>
                                             <td width="7%">{{ $item->user->gender }}</td>
@@ -303,7 +303,7 @@
                                                 {{ $item->user->name }}
                                             </td>
                                             <td width="15%">
-                                                {{ $item->user->grade }}
+                                                {{ $item->user->grade }}年级
                                             </td>
                                             <td width="7%"><script>document.write(editName('{{ $item->user->name }}'))</script></td>
                                             <td width="7%">{{ $item->user->gender }}</td>
@@ -328,7 +328,7 @@
                                                 {{ $item->user->name }}
                                             </td>
                                             <td width="15%">
-                                                {{ $item->user->grade }}
+                                                {{ $item->user->grade }}年级
                                             </td>
                                             <td width="7%"><script>document.write(editName('{{ $item->user->name }}'))</script></td>
                                             <td width="7%">{{ $item->user->gender }}</td>
@@ -353,7 +353,7 @@
                                                 {{ $item->user->name }}
                                             </td>
                                             <td width="15%">
-                                                {{ $item->user->grade }}
+                                                {{ $item->user->grade }}年级
                                             </td>
                                             <td width="7%"><script>document.write(editName('{{ $item->user->name }}'))</script></td>
                                             <td width="7%">{{ $item->user->gender }}</td>
@@ -379,7 +379,7 @@
                                                 {{ $item->user->name }}
                                             </td>
                                             <td width="15%">
-                                                {{ $item->user->grade }}
+                                                {{ $item->user->grade }}年级
                                             </td>
                                             <td width="7%"><script>document.write(editName('{{ $item->user->name }}'))</script></td>
                                             <td width="7%">{{ $item->user->gender }}</td>
@@ -431,7 +431,7 @@
                                             {{ $item->user->name }}
                                         </td>
                                         <td width="15%">
-                                            {{ $item->user->grade }}
+                                            {{ $item->user->grade }}年级
                                         </td>
                                         <td width="10%">
                                             <script>document.write(editName('{{ $item->user->name }}'))</script>
@@ -469,7 +469,7 @@
                                             {{ $item["name"] }}
                                         </td>
                                         <td width="15%">
-                                            {{ $item["grade"] }}
+                                            {{ $item["grade"] }}年级
                                         </td>
                                         <td width="10%">
                                             <script>document.write(editName('{{ $item["name"] }}'))</script>
