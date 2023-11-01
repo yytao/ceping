@@ -50,14 +50,14 @@ class StudentReportController extends AdminController
         $grid->column('name', __('学生名称'))->width(150);
         $grid->column('grade', __('年级'))->width(150);
         $grid->column('class', __('班级'))->width(150);
-        
+
         $grid->column('column', __('是否做完测试'))->display(function (){
-            
+
             $result = ExaminationResults::where("user_id", $this->id)->first();
-            
+
             return empty($result)? "未完成" : "已完成";
         });
-    
+
         $grid->column('report_file', __('下载报告'))->downloadable();
 
         return $grid;

@@ -28,6 +28,8 @@ class InvalidExamController extends AdminController
         $grid = new Grid(new InvalidExam());
 
         $grid->disableActions();
+        $grid->perPages([10]);
+
 
         $grid->school_name('学校名称')->width(200);
         $grid->examination_name('试卷名称')->width(200);

@@ -34,12 +34,12 @@ Route::group([
     //班级进度
     $router->resource('classInfo', ClassInfoController::class);
 
-    //班级进度
+    //学生做题记录
     $router->resource('invalidExam', InvalidExamController::class);
 
     //学校评估报告
     $router->resource('schoolReport', SchoolReportController::class);
-    
+
     //学校评估报告
     $router->resource('studentReport', StudentReportController::class);
 
