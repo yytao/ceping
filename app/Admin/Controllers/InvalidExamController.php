@@ -30,6 +30,9 @@ class InvalidExamController extends AdminController
         $grid->disableActions();
         $grid->perPages([10]);
 
+        $grid->filter(function ($filter) {
+            $filter->like('school_name', "学校名称");
+        });
 
         $grid->school_name('学校名称')->width(200);
         $grid->examination_name('试卷名称')->width(200);
@@ -38,7 +41,6 @@ class InvalidExamController extends AdminController
         $grid->society('社会赞许性');
         $grid->attention('注意力检测题');
         $grid->remark('备注');
-
 
         $grid->edit('操作')->default("查看测评卷")->modal('测评卷结果', function (){
             $ExaminationResults = ExaminationResults::find($this->getkey())??[];
