@@ -60,6 +60,9 @@ class StudentReportController extends AdminController
 
         $grid->column('report_file', __('下载报告'))->downloadable();
 
+
+        $grid->column('examResult.created_at', __('完成时间'))->width(150);
+
         return $grid;
     }
 

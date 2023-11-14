@@ -55,4 +55,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(School::class, 'id', 'school_id');
     }
+
+    public function examResult()
+    {
+        return $this->hasOne(ExaminationResults::class, 'user_id', 'id');
+    }
 }

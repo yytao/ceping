@@ -303,7 +303,7 @@ class IndexController extends Controller
 
 
 
-    
+
     /*
      * 显示报告的html页，用来生成pdf Student
      * 处理数据
@@ -374,7 +374,7 @@ class IndexController extends Controller
                 });
                 @$data["regular"][$item]["msg"] = array_column($msg, 'msg')[0]??"无";
                 @$data["regular"][$item]["title"] = "风险极低";
-                
+
             }
         }
 
@@ -425,7 +425,7 @@ class IndexController extends Controller
             $data["Y_title"] = "风险极低";
             $data["Y_msg"] = "总体而言，该生整体得分处于正常人群的平均分布范围之内，意味着未来校园生活中，该生在心理健康方面出现问题的可能性极低，无需过度关注。";
         }
-        
+
         // dd($data);
 
         return view("admin.student_report", compact(
@@ -433,5 +433,46 @@ class IndexController extends Controller
             "data",
         ));
     }
+
+    /*
+     * 显示报告的html页，用来生成pdf
+     * 处理数据
+     */
+    public function clearSchoolInvalid(Request $request, $school_id)
+    {
+        $examination = Examination::where('school_id', $school_id)->first();
+        if (empty($examination)) {
+            return "";
+        }
+
+        $answerResult = ExaminationResults::where("school_id", $school_id)
+            ->where("examination_id", $examination->id)
+            ->get();
+        if (empty($answerResult)) {
+            //return "";
+        }
+
+        $data = [];
+
+        $data["invalidAnswerResult"] = [];
+        foreach ($answerResult as $key => $resultItem) {
+
+            $examUserIds[] = $resultItem["user_id"];
+
+            //注意力测试题，如果有一道题得了0分，即判定无效试卷
+            $R = array_filter($resultItem["result"], function ($subArray) {
+                return $subArray['modular_id'] == 18 && $subArray['score'] == 0;
+            });
+            if ($R) {
+                $data["invalidAnswerResult"][$key] = $answerResult[$key];
+
+                ExaminationResults::find($answerResult[$key]->id)->delete();
+
+            }
+        }
+    }
+
+
+
 
 }
